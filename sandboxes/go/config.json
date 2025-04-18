@@ -1,0 +1,45 @@
+{
+	"name": "go",
+	"description": "Run Go code in an isolated sandbox.",
+	"version": "0.1.0",
+	"image": "sandbox-mcp/go:latest",
+	"user": "sandbox",
+	"entrypoint": "main.go",
+	"timeout": 60,
+	"command": [
+		"go",
+		"run",
+		"main.go"
+	],
+	"parameters": {
+		"files": [
+			{
+				"name": "go.mod",
+				"description": "Go module file for dependencies"
+			}
+		],
+		"additionalFiles": true
+	},
+	"security": {
+		"readOnly": false,
+		"capDrop": [
+			"all"
+		],
+		"securityOpt": [
+			"no-new-privileges:true"
+		],
+		"network": "none"
+	},
+	"resources": {
+		"cpu": 1,
+		"memory": 256,
+		"processes": 256,
+		"files": 256
+	},
+	"mount": {
+		"workdir": "/sandbox/src",
+		"tmpdirPrefix": "sandbox-mcp-",
+		"scriptPerms": "0755",
+		"readOnly": false
+	}
+}

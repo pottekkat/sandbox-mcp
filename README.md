@@ -1,0 +1,126 @@
+# Sandbox MCP
+
+Sandbox MCP is a Model Context Protocol (MCP) server that lets LLMs run code and configuration in secure, isolated Docker sandboxes.
+
+While LLMs are really good at generating code, most can't test the code they generate. This could result in you running untested code directly on your machine, which could have unintended consequences.
+
+Sandbox MCP gives the LLMs an easy-to-use execution environment in Docker containers, which anyone can easily create and configure through a simple, AI-native MCP server that runs locally.
+
+All you need is Docker.
+
+## Installation
+
+### Download Binary
+
+You can [download](https://github.com/pottekkat/sandbox-mcp/releases) and use the appropriate binary for your operating system and processor archetecture from the "Releases" page.
+
+### Install via Go
+
+Prerequisites:
+
+- Go 1.24 or higher
+
+```bash
+go install github.com/pottekkat/sandbox-mcp@latest
+```
+
+Get the path to the `sandbox-mcp` binary:
+
+```bash
+which sandbox-mcp
+```
+
+### Build from Source
+
+See [Development](#development) section below.
+
+## Usage
+
+### Initilization
+
+Before you use `sandbox-mcp` with LLMs, you need to initialize its configuration:
+
+```bash
+# Create the configuration directory and
+# pull the default sandboxes from GitHub
+sandbox-mcp --pull
+
+# Build the Docker images for the sandboxes
+sandbox-mcp --build
+```
+
+> [!NOTE]
+> Make sure you have Docker installed and running.
+
+### With MCP Hosts/Clients
+
+Add this to your `claude_desktop_config.json` for Claude Desktop or `mcp.json` for Cursor:
+
+```json
+{
+    "mcpServers": {
+        "sandbox-mcp": {
+            "command": "path/to/sandbox-mcp",
+            "args": [
+                "--stdio"
+            ]
+        }
+    }
+}
+```
+
+> [!NOTE]
+> Make sure to replace `path/to/sandbox-mcp` with the actual path to the `sandbox-mcp` binary.
+
+## Available Sandboxes
+
+### shell
+
+Run shell commands in a Linux environment with strict security and network constraints.
+
+### go
+
+Run Go code in an isolated sandbox.
+
+## Development
+
+Fork and clone the repository:
+
+```bash
+git clone https://github.com/username/sandbox-mcp.git
+```
+
+Change into the directory:
+
+```bash
+cd sandbox-mcp
+```
+
+Install dependencies:
+
+```bash
+make deps
+```
+
+Build the project:
+
+```bash
+make build
+```
+
+Update your MCP servers configuration to point to the local build:
+
+```json
+{
+    "mcpServers": {
+        "sandbox-mcp": {
+            "command": "/path/to/sandbox-mcp/dist/sandbox-mcp"
+        }
+    }
+}
+```
+
+## License
+
+[MIT License](LICENSE)
+
