@@ -21,3 +21,4 @@ clean:
 images:
 	docker build --file sandboxes/shell/Dockerfile --tag sandbox-mcp/shell:latest sandboxes/shell/
 	docker build --file sandboxes/go/Dockerfile --tag sandbox-mcp/go:latest sandboxes/go/
+	docker build --file sandboxes/python/Dockerfile --tag sandbox-mcp/python:latest sandboxes/python/
