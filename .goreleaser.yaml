@@ -10,7 +10,7 @@ before:
 builds:
   - id: "sandbox-mcp"
     # Path to main.go file or main package
-    main: ./cmd/main.go
+    main: ./cmd/sandbox-mcp/main.go
     # Binary name
     binary: sandbox-mcp
     env:
