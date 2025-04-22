@@ -93,6 +93,10 @@ Run Python code with a set of pre-installed libraries.
 
 Run simple Go code in an isolated sandbox.
 
+### javascript
+
+Run JavaScript code using Node.js.
+
 ## Development
 
 Fork and clone the repository:
