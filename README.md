@@ -1,12 +1,12 @@
 # Sandbox MCP
 
-Sandbox MCP is a Model Context Protocol (MCP) server that lets LLMs run code and configuration in secure, isolated Docker sandboxes.
+Sandbox MCP is a Model Context Protocol (MCP) server that lets LLMs (MCP hosts/clients) run code and configuration in secure, isolated Docker containers.
 
-While LLMs are really good at generating code, most can't test the code they generate. This could result in you running untested code directly on your machine, which could have unintended consequences.
+While LLMs are really good at generating code, most can't run the code they generate. This could result in you running untested code directly on your machine, which could have unintended consequences.
 
-Sandbox MCP gives the LLMs an easy-to-use execution environment in Docker containers, which anyone can easily create and configure through a simple, AI-native MCP server that runs locally.
+Sandbox MCP gives the LLMs an easy-to-use execution environment that anyone can easily create and configure through a simple, AI-native MCP server that runs locally.
 
-Inspired by [Codapi](https://codapi.org). Some of the sandboxes are exactly the same as [Codapi sandboxes](https://github.com/nalgeon/sandboxes).
+Inspired by [Codapi](https://codapi.org). Some sandboxes are the same as [Codapi sandboxes](https://github.com/nalgeon/sandboxes).
 
 ## Installation
 
@@ -78,9 +78,13 @@ Add this to your `claude_desktop_config.json` for Claude Desktop or `mcp.json` f
 
 Run shell commands in a Linux environment with strict security and network constraints.
 
+### python
+
+Run Python code with a set of pre-installed libraries.
+
 ### go
 
-Run Go code in an isolated sandbox.
+Run simple Go code in an isolated sandbox.
 
 ## Development
 
