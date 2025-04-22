@@ -1,5 +1,7 @@
 # Sandbox MCP
 
+<img align="right" src="logo.png" alt="Sandbox MCP Logo" width="200" height="200">
+
 Sandbox MCP is a Model Context Protocol (MCP) server that lets LLMs (MCP hosts/clients) run code and configuration in secure, isolated Docker containers.
 
 While LLMs are really good at generating code, most can't run the code they generate. This could result in you running untested code directly on your machine, which could have unintended consequences.
@@ -130,4 +132,3 @@ Update your MCP servers configuration to point to the local build:
 ## License
 
 [MIT License](LICENSE)
-
