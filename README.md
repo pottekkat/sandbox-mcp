@@ -6,8 +6,6 @@ While LLMs are really good at generating code, most can't test the code they gen
 
 Sandbox MCP gives the LLMs an easy-to-use execution environment in Docker containers, which anyone can easily create and configure through a simple, AI-native MCP server that runs locally.
 
-All you need is Docker.
-
 ## Installation
 
 ### Download Binary
