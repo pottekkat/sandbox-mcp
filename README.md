@@ -6,7 +6,7 @@ Sandbox MCP is a Model Context Protocol (MCP) server that lets LLMs (MCP hosts/c
 
 While LLMs are really good at generating code, most can't run the code they generate. This could result in you running untested code directly on your machine, which could have unintended consequences.
 
-Sandbox MCP gives the LLMs an easy-to-use execution environment that anyone can easily create and configure through a simple, AI-native MCP server that runs locally.
+Sandbox MCP gives the LLMs an easy-to-use execution environment that anyone can create and configure through a simple, AI-native MCP server that runs locally.
 
 Inspired by [Codapi](https://codapi.org). Some sandboxes are the same as [Codapi sandboxes](https://github.com/nalgeon/sandboxes).
 
