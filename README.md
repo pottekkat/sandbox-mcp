@@ -21,7 +21,7 @@ Prerequisites:
 - Go 1.24 or higher
 
 ```bash
-go install github.com/pottekkat/sandbox-mcp@latest
+go install github.com/pottekkat/sandbox-mcp/cmd/sandbox-mcp@latest
 ```
 
 Get the path to the `sandbox-mcp` binary:
