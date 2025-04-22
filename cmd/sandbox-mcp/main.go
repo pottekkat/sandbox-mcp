@@ -13,9 +13,9 @@ import (
 
 func main() {
 	// Parse flags
-	stdio := flag.Bool("stdio", false, "Start in stdio mode to run as an MCP server")
+	stdio := flag.Bool("stdio", false, "Start the MCP via stdio transport")
 	build := flag.Bool("build", false, "Build Docker images for all sandboxes")
-	pull := flag.Bool("pull", false, "Pull default sandboxes from GitHub releases")
+	pull := flag.Bool("pull", false, "Pull default sandboxes from GitHub")
 	force := flag.Bool("force", false, "Force overwrite existing sandboxes when pulling")
 	flag.Parse()
 
