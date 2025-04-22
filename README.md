@@ -8,7 +8,7 @@ While LLMs are really good at generating code, most can't run the code they gene
 
 Sandbox MCP gives the LLMs an easy-to-use execution environment that anyone can create and configure through a simple, AI-native MCP server that runs locally.
 
-Inspired by [Codapi](https://codapi.org). Some sandboxes are the same as [Codapi sandboxes](https://github.com/nalgeon/sandboxes).
+_Inspired by [Codapi](https://codapi.org). Some sandboxes are the same as [Codapi sandboxes](https://github.com/nalgeon/sandboxes)._
 
 ## Installation
 
@@ -83,6 +83,11 @@ Run shell commands in a Linux environment with strict security and network const
 ### python
 
 Run Python code with a set of pre-installed libraries.
+
+> [!IMPORTANT]
+> ### Your Own Sandbox
+> 
+> You can create your own sandboxes by creating a new directory in the `sandboxes` directory with your sandbox name and adding a `Dockerfile` and `config.json` to it. See [/sandboxes/](/sandboxes/) for examples.
 
 ### go
 
