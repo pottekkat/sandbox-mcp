@@ -1,0 +1,38 @@
+{
+	"name": "network-tools",
+	"description": "Use various network tools in an isolated Linux sandbox. The container has network access. See https://github.com/jonlabelle/docker-network-tools for a list of available tools.",
+	"version": "0.1.0",
+	"image": "sandbox-mcp/network-tools:latest",
+	"user": "sandbox",
+	"entrypoint": "main.sh",
+	"timeout": 5,
+	"command": [
+		"sh",
+		"main.sh"
+	],
+	"parameters": {
+		"additionalFiles": true
+	},
+	"security": {
+		"readOnly": true,
+		"capDrop": [
+			"all"
+		],
+		"securityOpt": [
+			"no-new-privileges:true"
+		],
+		"network": "bridge"
+	},
+	"resources": {
+		"cpu": 1,
+		"memory": 64,
+		"processes": 64,
+		"files": 96
+	},
+	"mount": {
+		"workdir": "/sandbox",
+		"tmpdirPrefix": "sandbox-mcp-",
+		"scriptPerms": "0755",
+		"readOnly": true
+	}
+}

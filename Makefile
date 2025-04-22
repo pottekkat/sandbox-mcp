@@ -22,3 +22,5 @@ images:
 	docker build --file sandboxes/shell/Dockerfile --tag sandbox-mcp/shell:latest sandboxes/shell/
 	docker build --file sandboxes/go/Dockerfile --tag sandbox-mcp/go:latest sandboxes/go/
 	docker build --file sandboxes/python/Dockerfile --tag sandbox-mcp/python:latest sandboxes/python/
+	docker build --file sandboxes/javascript/Dockerfile --tag sandbox-mcp/javascript:latest sandboxes/javascript/
+	docker build --file sandboxes/network-tools/Dockerfile --tag sandbox-mcp/network-tools:latest sandboxes/network-tools/

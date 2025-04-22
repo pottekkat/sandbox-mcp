@@ -89,6 +89,12 @@ Run Python code with a set of pre-installed libraries.
 > 
 > You can create your own sandboxes by creating a new directory in the `sandboxes` directory with your sandbox name and adding a `Dockerfile` and `config.json` to it. See [/sandboxes/](/sandboxes/) for examples.
 
+### network-tools
+
+Use various network tools in an isolated Linux sandbox. The container has network access.
+
+See [jonlabelle/docker-network-tools](https://github.com/jonlabelle/docker-network-tools) for a list of available tools.
+
 ### go
 
 Run simple Go code in an isolated sandbox.
