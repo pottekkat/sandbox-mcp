@@ -118,7 +118,10 @@ Update your MCP servers configuration to point to the local build:
 {
     "mcpServers": {
         "sandbox-mcp": {
-            "command": "/path/to/sandbox-mcp/dist/sandbox-mcp"
+            "command": "/path/to/sandbox-mcp/dist/sandbox-mcp",
+            "args": [
+                "--stdio"
+            ]
         }
     }
 }
