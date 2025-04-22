@@ -10,6 +10,12 @@ Sandbox MCP gives the LLMs an easy-to-use execution environment that anyone can 
 
 _Inspired by [Codapi](https://codapi.org). Some sandboxes are the same as [Codapi sandboxes](https://github.com/nalgeon/sandboxes)._
 
+## Demo
+
+The demo below shows how the MCP works with Claude Desktop. See the [video](demo.mp4) if the GIF below isn't clear.
+
+![Sandbox MCP demo GIF](demo.gif)
+
 ## Installation
 
 ### Download Binary
