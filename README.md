@@ -17,15 +17,17 @@ _Inspired by [Codapi](https://codapi.org). Some sandboxes are the same as [Codap
 
 ## Demo
 
-The demo below shows how Sandbox MCP works with Claude Desktop. See the [video](demo.mp4) if the GIF below isn't clear.
+This demo shows how Sandbox MCP works with Claude Desktop.
 
 ![Sandbox MCP demo GIF](demo.gif)
+
+Try the [video](demo.mp4) if the GIF isn't clear.
 
 ## Installation
 
 ### Download Binary
 
-You can [download](https://github.com/pottekkat/sandbox-mcp/releases) and use the appropriate binary for your operating system and processor archetecture from the "Releases" page.
+You can download the appropriate binary for your operating system (for example, `Darwin`) and processor architecture (`arm64`) from the [Releases page](https://github.com/pottekkat/sandbox-mcp/releases) (`sandbox-mcp_Darwin_arm64.tar.gz`).
 
 ### Install via Go
 
@@ -45,7 +47,7 @@ which sandbox-mcp
 
 ### Build from Source
 
-See [Development](#development) section below.
+See the [Development section](#development).
 
 ## Usage
 
@@ -54,8 +56,9 @@ See [Development](#development) section below.
 Before you use `sandbox-mcp` with LLMs, you need to initialize its configuration:
 
 ```bash
-# Create the configuration directory and
-# pull the default sandboxes from GitHub
+# Create the configuration directory in
+# $XDG_CONFIG_HOME/sandbox-mcp and pull
+# the default sandboxes from GitHub
 sandbox-mcp --pull
 
 # Build the Docker images for the sandboxes
@@ -67,7 +70,7 @@ sandbox-mcp --build
 
 ### With MCP Hosts/Clients
 
-Add this to your `claude_desktop_config.json` for Claude Desktop or `mcp.json` for Cursor:
+Add this to your `claude_desktop_config.json` for Claude Desktop or `mcp.json` for Cursor IDE:
 
 ```json
 {
@@ -98,7 +101,7 @@ Run Python code with a set of pre-installed libraries.
 > [!IMPORTANT]
 > ### Your Own Sandbox
 > 
-> You can create your own sandboxes by creating a new directory in the `sandboxes` directory with your sandbox name and adding a `Dockerfile` and `config.json` to it. See [/sandboxes/](/sandboxes/) for examples.
+> You can create and add your own sandboxes in `$XDG_CONFIG_HOME/sandbox-mcp/sandboxes`. A sandbox is essentially a Dockerfile and a JSON configuration. Check out the [examples and the guide](/sandboxes) to learn more.
 
 ### network-tools
 
