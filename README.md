@@ -1,6 +1,4 @@
-<img src="logo.png" alt="Sandbox MCP Logo" width="200" height="200">
-
-# Sandbox MCP
+![Sandbox MCP Logo](readme-banner.png)
 
 ![GitHub Actions Workflow Status](https://img.shields.io/github/actions/workflow/status/pottekkat/sandbox-mcp/release.yaml)
 ![GitHub Release](https://img.shields.io/github/v/release/pottekkat/sandbox-mcp)
