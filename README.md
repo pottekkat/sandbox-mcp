@@ -17,7 +17,7 @@ _Inspired by [Codapi](https://codapi.org). Some sandboxes are the same as [Codap
 
 ## Demo
 
-The demo below shows how the MCP works with Claude Desktop. See the [video](demo.mp4) if the GIF below isn't clear.
+The demo below shows how Sandbox MCP works with Claude Desktop. See the [video](demo.mp4) if the GIF below isn't clear.
 
 ![Sandbox MCP demo GIF](demo.gif)
 
