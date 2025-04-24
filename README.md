@@ -1,6 +1,11 @@
+<img src="logo.png" alt="Sandbox MCP Logo" width="200" height="200">
+
 # Sandbox MCP
 
-<img align="right" src="logo.png" alt="Sandbox MCP Logo" width="200" height="200">
+![GitHub Actions Workflow Status](https://img.shields.io/github/actions/workflow/status/pottekkat/sandbox-mcp/release.yaml)
+![GitHub Release](https://img.shields.io/github/v/release/pottekkat/sandbox-mcp)
+![GitHub commits since latest release](https://img.shields.io/github/commits-since/pottekkat/sandbox-mcp/latest)
+![GitHub License](https://img.shields.io/github/license/pottekkat/sandbox-mcp)
 
 Sandbox MCP is a Model Context Protocol (MCP) server that lets LLMs (MCP hosts/clients) run code and configuration in secure, isolated Docker containers.
 
