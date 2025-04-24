@@ -5,11 +5,13 @@
 ![GitHub commits since latest release](https://img.shields.io/github/commits-since/pottekkat/sandbox-mcp/latest)
 ![GitHub License](https://img.shields.io/github/license/pottekkat/sandbox-mcp)
 
-Sandbox MCP is a Model Context Protocol (MCP) server that lets LLMs (MCP hosts/clients) run code and configuration in secure, isolated Docker containers.
+**Sandbox MCP** is a Model Context Protocol (MCP) server that enables LLMs (MCP hosts/clients) to **run code in secure, isolated Docker containers**.
 
-While LLMs are really good at generating code, most can't run the code they generate. This could result in you running untested code directly on your machine, which could have unintended consequences.
+While LLMs are really good at generating code, most **can't run the code they generate**. You end up running this untested code directly on your machine, which could have drastic unintended consequences.
 
-Sandbox MCP gives the LLMs an easy-to-use execution environment that anyone can create and configure through a simple, AI-native MCP server that runs locally.
+Giving LLMs the tools to test the code safely prevents such issues and helps you **generate more accurate code in fewer iterations**.
+
+Sandbox MCP gives the LLMs an **easy-to-use execution environment that anyone can create and configure** through a simple, AI-native MCP server that runs locally.
 
 _Inspired by [Codapi](https://codapi.org). Some sandboxes are the same as [Codapi sandboxes](https://github.com/nalgeon/sandboxes)._
 
