@@ -13,7 +13,7 @@ apisix:
 nginx_config:
   worker_rlimit_nofile: 128
   event:
-    woker_connections: 32
+    worker_connections: 32
   meta:
     lua_shared_dicts:
       - prometheus_metrics: 1m
