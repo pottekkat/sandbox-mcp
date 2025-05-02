@@ -206,6 +206,7 @@ func NewSandboxToolHandler(sandboxConfig *config.SandboxConfig) func(context.Con
 				AttachStderr: true,
 				User:         sandboxConfig.User,
 			}
+
 			execResp, err := cli.ContainerExecCreate(execCtx, resp.ID, execConfig)
 			if err != nil {
 				return nil, fmt.Errorf("failed to create exec: %v", err)
@@ -253,7 +254,6 @@ func NewSandboxToolHandler(sandboxConfig *config.SandboxConfig) func(context.Con
 		}
 
 		// Wait for execution to finish
-		// (This section only runs if useBefore is false)
 		statusCh, errCh := cli.ContainerWait(execCtx, resp.ID, container.WaitConditionNotRunning)
 		select {
 		case err := <-errCh:
