@@ -113,6 +113,10 @@ See [jonlabelle/docker-network-tools](https://github.com/jonlabelle/docker-netwo
 
 Run simple Go code in an isolated sandbox.
 
+### apisix
+
+Run Apache APISIX in a sandbox. Custom routes, plugins, and upstreams can be configured through a YAML file and it can be tested using `curl` commands. Has network access.
+
 ### javascript
 
 Run JavaScript code using Node.js.
