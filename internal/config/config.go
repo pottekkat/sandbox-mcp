@@ -74,6 +74,27 @@ func (c *SandboxConfig) Timeout() time.Duration {
 	return time.Duration(c.TimeoutRaw) * time.Second
 }
 
+// RunCommand returns the initial command to run in the sandbox
+func (c *SandboxConfig) RunCommand() []string {
+	if len(c.Before) > 0 {
+		return c.Before
+	}
+	return c.Command
+}
+
+// ExecCommand returns the command to execute in a running sandbox
+func (c *SandboxConfig) ExecCommand() []string {
+	if len(c.Before) > 0 {
+		return c.Command
+	}
+	return nil
+}
+
+// Tty returns true if the sandbox should be run with a TTY
+func (c *SandboxConfig) Tty() bool {
+	return len(c.Before) > 0
+}
+
 // parseFileMode converts a string like "0755" into os.FileMode
 func parseFileMode(mode string) (os.FileMode, error) {
 	// Parse as base-8 (octal)

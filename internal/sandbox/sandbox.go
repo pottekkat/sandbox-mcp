@@ -129,20 +129,13 @@ func NewSandboxToolHandler(sandboxConfig *config.SandboxConfig) func(context.Con
 		}
 		defer cli.Close()
 
-		// Decide what to use as the initial command
-		useBefore := len(sandboxConfig.Before) > 0
-		initialCmd := sandboxConfig.Command
-		if useBefore {
-			initialCmd = sandboxConfig.Before
-		}
-
 		// Create container config
 		containerConfig := &container.Config{
 			Image:      sandboxConfig.Image,
-			Cmd:        initialCmd,
+			Cmd:        sandboxConfig.RunCommand(),
 			WorkingDir: sandboxConfig.Mount.WorkDir,
 			User:       sandboxConfig.User,
-			Tty:        useBefore,
+			Tty:        sandboxConfig.Tty(),
 		}
 
 		// Create host config
@@ -200,7 +193,7 @@ func NewSandboxToolHandler(sandboxConfig *config.SandboxConfig) func(context.Con
 		}
 
 		// Only exec Command if Before was used to start the container
-		if useBefore {
+		if sandboxConfig.ExecCommand() != nil {
 
 			// Wait for container to be running
 			if err := waitForContainer(execCtx, cli, resp.ID, 10*time.Second); err != nil {
