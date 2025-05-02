@@ -61,6 +61,7 @@ type SandboxConfig struct {
 	User        string            `json:"user"`
 	Entrypoint  string            `json:"entrypoint"`
 	TimeoutRaw  int               `json:"timeout"`
+	Before      []string          `json:"before"`
 	Command     []string          `json:"command"`
 	Parameters  SandboxParameters `json:"parameters"`
 	Security    SandboxSecurity   `json:"security"`
@@ -71,6 +72,27 @@ type SandboxConfig struct {
 // Timeout returns the timeout as a time.Duration
 func (c *SandboxConfig) Timeout() time.Duration {
 	return time.Duration(c.TimeoutRaw) * time.Second
+}
+
+// RunCommand returns the initial command to run in the sandbox
+func (c *SandboxConfig) RunCommand() []string {
+	if len(c.Before) > 0 {
+		return c.Before
+	}
+	return c.Command
+}
+
+// ExecCommand returns the command to execute in a running sandbox
+func (c *SandboxConfig) ExecCommand() []string {
+	if len(c.Before) > 0 {
+		return c.Command
+	}
+	return nil
+}
+
+// Tty returns true if the sandbox should be run with a TTY
+func (c *SandboxConfig) Tty() bool {
+	return len(c.Before) > 0
 }
 
 // parseFileMode converts a string like "0755" into os.FileMode

@@ -1,0 +1,48 @@
+{
+	"name": "apisix",
+	"description": "Run a small, sandboxed instance of Apache APISIX, which can be configured through YAML and can be interacted through a curl command provided in main.sh. For example, curl -sI `http://127.0.0.1:9080` | grep Server",
+	"version": "0.1.0",
+	"image": "sandbox-mcp/apisix:latest",
+	"user": "sandbox",
+	"entrypoint": "main.sh",
+	"timeout": 60,
+	"before": [
+		"docker-start"
+	],
+	"command": [
+		"sh",
+		"-c",
+		"sleep 1 && mv -f apisix.yaml /usr/local/apisix/conf/apisix.yaml && sleep 1 && sh main.sh"
+	],
+	"parameters": {
+		"additionalFiles": true,
+		"files": [
+			{
+				"name": "apisix.yaml",
+				"description": "APISIX route configuration file"
+			}
+		]
+	},
+	"security": {
+		"readOnly": false,
+		"capDrop": [
+			"all"
+		],
+		"securityOpt": [
+			"no-new-privileges:true"
+		],
+		"network": "bridge"
+	},
+	"resources": {
+		"cpu": 1,
+		"memory": 256,
+		"processes": 256,
+		"files": 256
+	},
+	"mount": {
+		"workdir": "/sandbox",
+		"tmpdirPrefix": "sandbox-mcp-",
+		"scriptPerms": "0755",
+		"readOnly": false
+	}
+}

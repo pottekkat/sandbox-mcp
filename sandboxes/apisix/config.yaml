@@ -1,0 +1,59 @@
+apisix:
+  node_listen:
+    - ip: 0.0.0.0
+      port: 9080
+  enable_admin: false
+  proxy_cache:
+    zones:
+      - name: disk_cache
+        memory_size: 2m
+        disk_size: 10m
+        disk_path: /tmp/disk_cache
+        cache_levels: 1:2
+nginx_config:
+  worker_rlimit_nofile: 128
+  event:
+    worker_connections: 32
+  meta:
+    lua_shared_dicts:
+      - prometheus_metrics: 1m
+  stream:
+    lua_shared_dict:
+      etcd-cluster-health-check-stream: 1m
+      lrucache-lock-stream: 1m
+      plugin-limit-conn-stream: 1m
+      worker-events-stream: 1m
+      tars-stream: 1m
+  http:
+    enable_access_log: false
+    access_log_buffer: 100
+    lua_shared_dict:
+      internal-status: 1m
+      plugin-limit-req: 1m
+      plugin-limit-count: 1m
+      prometheus-metrics: 1m
+      plugin-limit-conn: 1m
+      upstream-healthcheck: 1m
+      worker-events: 1m
+      lrucache-lock: 1m
+      balancer-ewma: 1m
+      balancer-ewma-locks: 1m
+      balancer-ewma-last-touched-at: 1m
+      plugin-limit-req-redis-cluster-slot-lock: 1m
+      plugin-limit-count-redis-cluster-slot-lock: 1m
+      plugin-limit-conn-redis-cluster-slot-lock: 1m
+      tracing_buffer: 1m
+      plugin-api-breaker: 1m
+      etcd-cluster-health-check: 1m
+      discovery: 1m
+      jwks: 1m
+      introspection: 1m
+      access-tokens: 1m
+      ext-plugin: 1m
+      tars: 1m
+      cas-auth: 1m
+      ocsp-stapling: 1m
+deployment:
+  role: data_plane
+  role_data_plane:
+    config_provider: yaml
