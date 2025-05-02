@@ -1,0 +1,10 @@
+{
+    "mcpServers": {
+        "sandbox-mcp": {
+            "command": "/Users/pottekkat/go/bin/sandbox-mcp",
+            "args": [
+                "--stdio"
+            ]
+        }
+    }
+}

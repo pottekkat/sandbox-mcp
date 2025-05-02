@@ -1,8 +1,12 @@
-.PHONY: build clean deps images
+.PHONY: build clean deps images test
 
 # Install dependencies
 deps:
 	go mod tidy 
+
+test:
+	chmod +x test/run_tests.sh
+	./test/run_tests.sh
 
 # Build the application
 build:
