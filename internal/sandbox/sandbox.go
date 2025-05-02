@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"os"
 	"path/filepath"
+	"time"
 
 	"github.com/docker/docker/api/types/container"
 	"github.com/docker/docker/api/types/mount"
@@ -14,6 +15,31 @@ import (
 	"github.com/mark3labs/mcp-go/mcp"
 	"github.com/pottekkat/sandbox-mcp/internal/config"
 )
+
+// waitForContainer waits for a container to be in running state with a specified timeout
+func waitForContainer(ctx context.Context, cli *client.Client, containerID string, timeout time.Duration) error {
+	ticker := time.NewTicker(500 * time.Millisecond)
+	defer ticker.Stop()
+
+	timeoutCh := time.After(timeout)
+
+	for {
+		select {
+		case <-ctx.Done():
+			return fmt.Errorf("context cancelled while waiting for container to start")
+		case <-timeoutCh:
+			return fmt.Errorf("container did not reach running state within %v", timeout)
+		case <-ticker.C:
+			inspect, err := cli.ContainerInspect(ctx, containerID)
+			if err != nil {
+				return fmt.Errorf("failed to inspect container: %v", err)
+			}
+			if inspect.State != nil && inspect.State.Running {
+				return nil
+			}
+		}
+	}
+}
 
 // NewSandboxTool creates a sandbox tool from a config
 func NewSandboxTool(sandboxConfig *config.SandboxConfig) mcp.Tool {
@@ -103,13 +129,20 @@ func NewSandboxToolHandler(sandboxConfig *config.SandboxConfig) func(context.Con
 		}
 		defer cli.Close()
 
+		// Decide what to use as the initial command
+		useBefore := len(sandboxConfig.Before) > 0
+		initialCmd := sandboxConfig.Command
+		if useBefore {
+			initialCmd = sandboxConfig.Before
+		}
+
 		// Create container config
 		containerConfig := &container.Config{
 			Image:      sandboxConfig.Image,
-			Cmd:        sandboxConfig.Command,
+			Cmd:        initialCmd,
 			WorkingDir: sandboxConfig.Mount.WorkDir,
 			User:       sandboxConfig.User,
-			Tty:        false,
+			Tty:        useBefore,
 		}
 
 		// Create host config
@@ -166,7 +199,68 @@ func NewSandboxToolHandler(sandboxConfig *config.SandboxConfig) func(context.Con
 			return nil, fmt.Errorf("failed to start container: %v", err)
 		}
 
+		// Only exec Command if Before was used to start the container
+		if useBefore {
+
+			// Wait for container to be running
+			if err := waitForContainer(execCtx, cli, resp.ID, 10*time.Second); err != nil {
+				return nil, err
+			}
+
+			execConfig := container.ExecOptions{
+				Cmd:          sandboxConfig.Command,
+				AttachStdout: true,
+				AttachStderr: true,
+				User:         sandboxConfig.User,
+			}
+			execResp, err := cli.ContainerExecCreate(execCtx, resp.ID, execConfig)
+			if err != nil {
+				return nil, fmt.Errorf("failed to create exec: %v", err)
+			}
+
+			// Attach to the exec command to capture output
+			response, err := cli.ContainerExecAttach(execCtx, execResp.ID, container.ExecStartOptions{})
+			if err != nil {
+				return nil, fmt.Errorf("failed to attach to exec: %v", err)
+			}
+			defer response.Close()
+
+			// Read stdout and stderr from the exec command
+			stdout := new(bytes.Buffer)
+			stderr := new(bytes.Buffer)
+			if _, err := stdcopy.StdCopy(stdout, stderr, response.Reader); err != nil {
+				return nil, fmt.Errorf("failed to read exec output: %v", err)
+			}
+
+			// Wait for the exec command to complete
+			for {
+				inspectResp, err := cli.ContainerExecInspect(execCtx, execResp.ID)
+				if err != nil {
+					return nil, fmt.Errorf("failed to inspect exec: %v", err)
+				}
+				if !inspectResp.Running {
+					// Return error if exec command failed
+					if inspectResp.ExitCode != 0 {
+						if stderr.Len() > 0 {
+							return mcp.NewToolResultError(stderr.String()), nil
+						}
+						return mcp.NewToolResultError(fmt.Sprintf("Command failed with exit code %d", inspectResp.ExitCode)), nil
+					}
+
+					// Include stderr in stdout if present
+					if stderr.Len() > 0 {
+						stdout.WriteString("\nStderr:\n")
+						stdout.Write(stderr.Bytes())
+					}
+
+					return mcp.NewToolResultText(stdout.String()), nil
+				}
+				time.Sleep(100 * time.Millisecond)
+			}
+		}
+
 		// Wait for execution to finish
+		// (This section only runs if useBefore is false)
 		statusCh, errCh := cli.ContainerWait(execCtx, resp.ID, container.WaitConditionNotRunning)
 		select {
 		case err := <-errCh:

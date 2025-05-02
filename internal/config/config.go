@@ -61,6 +61,7 @@ type SandboxConfig struct {
 	User        string            `json:"user"`
 	Entrypoint  string            `json:"entrypoint"`
 	TimeoutRaw  int               `json:"timeout"`
+	Before      []string          `json:"before"`
 	Command     []string          `json:"command"`
 	Parameters  SandboxParameters `json:"parameters"`
 	Security    SandboxSecurity   `json:"security"`
