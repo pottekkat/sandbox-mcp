@@ -1,0 +1,33 @@
+[
+    {
+        "request": {
+            "main.sh": "echo hello!"
+        },
+        "response": {
+            "text": "hello!\n"
+        }
+    },
+    {
+        "request": {
+            "main.sh": "cat hello.txt",
+            "files": [
+                {
+                    "filename": "hello.txt",
+                    "content": "hello!"
+                }
+            ]
+        },
+        "response": {
+            "text": "hello!\n"
+        }
+    },
+    {
+        "request": {
+            "main.sh": "invalid-command"
+        },
+        "response": {
+            "text": "not found",
+            "isError": true
+        }
+    }
+]

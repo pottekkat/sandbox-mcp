@@ -1,0 +1,36 @@
+[
+    {
+        "request": {
+            "main.go": "package main\n\nimport \"fmt\"\n\nfunc main() {\n\tfmt.Println(\"hello!\")\n}",
+            "go.mod": "module example\n\ngo 1.19\n"
+        },
+        "response": {
+            "text": "hello!\n"
+        }
+    },
+    {
+        "request": {
+            "main.go": "package main\n\nimport (\n\t\"fmt\"\n\t\"os\"\n\t\"io/ioutil\"\n)\n\nfunc main() {\n\tdata, err := ioutil.ReadFile(\"hello.txt\")\n\tif err != nil {\n\t\tfmt.Fprintf(os.Stderr, \"Error reading file: %v\\n\", err)\n\t\tos.Exit(1)\n\t}\n\tfmt.Print(string(data))\n}",
+            "go.mod": "module example\n\ngo 1.19\n",
+            "files": [
+                {
+                    "filename": "hello.txt",
+                    "content": "hello!"
+                }
+            ]
+        },
+        "response": {
+            "text": "hello!"
+        }
+    },
+    {
+        "request": {
+            "main.go": "package main\n\nimport \"invalid/package\"\n\nfunc main() {\n\tfmt.Println(\"This won't compile\")\n}",
+            "go.mod": "module example\n\ngo 1.19\n"
+        },
+        "response": {
+            "text": "package invalid/package is not in std",
+            "isError": true
+        }
+    }
+]
