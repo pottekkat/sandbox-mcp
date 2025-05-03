@@ -1,0 +1,50 @@
+[
+  {
+    "request": {
+      "main.py": "print(\"Hello from Python!\")"
+    },
+    "response": {
+      "text": "Hello from Python!\n"
+    }
+  },
+  {
+    "request": {
+      "main.py": "with open(\"test_file.txt\", \"r\") as f:\n    content = f.read()\n    print(content)",
+      "files": [
+        {
+          "filename": "test_file.txt",
+          "content": "This is a test file for Python sandbox."
+        }
+      ]
+    },
+    "response": {
+      "text": "This is a test file for Python sandbox.\n"
+    }
+  },
+  {
+    "request": {
+      "main.py": "import non_existent_module\nprint(\"This won't execute\")"
+    },
+    "response": {
+      "text": "ModuleNotFoundError: No module named 'non_existent_module'",
+      "isError": true
+    }
+  },
+  {
+    "request": {
+      "main.py": "a = 1/0"
+    },
+    "response": {
+      "text": "ZeroDivisionError: division by zero",
+      "isError": true
+    }
+  },
+  {
+    "request": {
+      "main.py": "import sys\nprint(sys.version)\nimport os\nprint(os.environ.get('HOME'))"
+    },
+    "response": {
+      "text": "/sandbox"
+    }
+  }
+]

@@ -78,6 +78,7 @@ for test_file in "$TEST_DIR"/*.json; do
         actual_is_error=$(echo "$output" | jq -r '.isError // false')
         
         # Check if response matches expectations
+        # Just simple substring match for now
         if [[ "$actual_text" == *"$expected_text"* ]] && [ "$expected_is_error" = "$actual_is_error" ]; then
             echo "    ✓ Passed"
         else
