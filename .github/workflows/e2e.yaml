@@ -40,7 +40,7 @@ jobs:
               run: make images
               
             - name: Build the MCP server
-              run: go build  -o dist/sandbox-mcp ./cmd/sandbox-mcp/main.go
+              run: go build -o dist/sandbox-mcp ./cmd/sandbox-mcp/main.go
               
             - name: Prepare config for GitHub
               run: |
@@ -52,19 +52,8 @@ jobs:
                     # Replace the placeholder with the actual binary path
                     sed "s|BINARY_PATH_PLACEHOLDER|$BINARY_PATH|g" test/github-config.json > test/config.json
                   else
-                    # Otherwise, create a new config.json
-                    cat > test/config.json << EOF
-                    {
-                        "mcpServers": {
-                            "sandbox-mcp": {
-                                "command": "$BINARY_PATH",
-                                "args": [
-                                    "--stdio"
-                                ]
-                            }
-                        }
-                    }
-                    EOF
+                    # Create a simple config using echo and jq
+                    echo '{"mcpServers":{"sandbox-mcp":{"command":"BINARY_PATH_PLACEHOLDER","args":["--stdio"]}}}' | sed "s|BINARY_PATH_PLACEHOLDER|$BINARY_PATH|g" > test/config.json
                   fi
                   
                   # Verify the config
