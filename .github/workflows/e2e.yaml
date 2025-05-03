@@ -73,6 +73,9 @@ jobs:
                   echo "Using config.json:"
                   cat test/config.json
             
+            - name: Fix permissions for test files
+              run: chmod -R 777 test/
+            
             - name: Run tests
               run: |
                   chmod +x test/run_tests.sh

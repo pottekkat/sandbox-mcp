@@ -130,11 +130,15 @@ func NewSandboxToolHandler(sandboxConfig *config.SandboxConfig) func(context.Con
 		defer cli.Close()
 
 		// Create container config
+		user := sandboxConfig.User
+		if os.Getenv("CI") == "true" {
+			user = "root"
+		}
 		containerConfig := &container.Config{
 			Image:      sandboxConfig.Image,
 			Cmd:        sandboxConfig.RunCommand(),
 			WorkingDir: sandboxConfig.Mount.WorkDir,
-			User:       sandboxConfig.User,
+			User:       user,
 			Tty:        sandboxConfig.Tty(),
 		}
 
@@ -204,7 +208,7 @@ func NewSandboxToolHandler(sandboxConfig *config.SandboxConfig) func(context.Con
 				Cmd:          sandboxConfig.Command,
 				AttachStdout: true,
 				AttachStderr: true,
-				User:         sandboxConfig.User,
+				User:         user,
 			}
 
 			execResp, err := cli.ContainerExecCreate(execCtx, resp.ID, execConfig)
