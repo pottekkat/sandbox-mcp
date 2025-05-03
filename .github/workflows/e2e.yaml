@@ -40,7 +40,7 @@ jobs:
               run: make images
               
             - name: Build the MCP server
-              run: make build
+              run: go build  -o dist/sandbox-mcp ./cmd/sandbox-mcp/main.go
               
             - name: Prepare config for GitHub
               run: |
