@@ -1,0 +1,10 @@
+{
+    "mcpServers": {
+        "sandbox-mcp": {
+            "command": "BINARY_PATH_PLACEHOLDER",
+            "args": [
+                "--stdio"
+            ]
+        }
+    }
+} 
