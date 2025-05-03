@@ -1,0 +1,50 @@
+[
+  {
+    "request": {
+      "index.js": "console.log(\"Hello from JavaScript!\");"
+    },
+    "response": {
+      "text": "Hello from JavaScript!\n"
+    }
+  },
+  {
+    "request": {
+      "index.js": "const fs = require('fs');\nconst content = fs.readFileSync('test_file.txt', 'utf8');\nconsole.log(content);",
+      "files": [
+        {
+          "filename": "test_file.txt",
+          "content": "This is a test file for JavaScript sandbox."
+        }
+      ]
+    },
+    "response": {
+      "text": "This is a test file for JavaScript sandbox.\n"
+    }
+  },
+  {
+    "request": {
+      "index.js": "const nonExistentFunction = require('non-existent-module');\nconsole.log(\"This won't execute\");"
+    },
+    "response": {
+      "text": "Cannot find module 'non-existent-module'",
+      "isError": true
+    }
+  },
+  {
+    "request": {
+      "index.js": "console.log(process.version);\nconsole.log(process.env.HOME);"
+    },
+    "response": {
+      "text": "/sandbox"
+    }
+  },
+  {
+    "request": {
+      "index.js": "throw new Error('Test error');"
+    },
+    "response": {
+      "text": "Error: Test error",
+      "isError": true
+    }
+  }
+]
