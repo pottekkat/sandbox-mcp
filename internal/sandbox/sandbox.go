@@ -205,6 +205,19 @@ func NewSandboxToolHandler(sandboxConfig *config.SandboxConfig) func(context.Con
 				timeout = 30 * time.Second
 			}
 			if err := waitForContainer(execCtx, cli, resp.ID, timeout); err != nil {
+				// Try to fetch and print container logs for debugging
+				logs, logErr := cli.ContainerLogs(execCtx, resp.ID, container.LogsOptions{
+					ShowStdout: true,
+					ShowStderr: true,
+					Timestamps: false,
+					Follow:     false,
+				})
+				if logErr == nil {
+					defer logs.Close()
+					buf := new(bytes.Buffer)
+					_, _ = stdcopy.StdCopy(buf, buf, logs)
+					return nil, fmt.Errorf("%v\nContainer logs:\n%s", err, buf.String())
+				}
 				return nil, err
 			}
 
