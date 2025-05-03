@@ -41,10 +41,11 @@ jobs:
               
             - name: Build sandboxes and Docker images
               run: |
-                  "$BINARY_PATH"
                   # Get the absolute path to the built binary
                   BINARY_PATH="$(pwd)/dist/sandbox-mcp"
                   
+                  "$BINARY_PATH"
+
                   # Copy the sandboxes directory to the XDG config path
                   export XDG_CONFIG_HOME="$HOME/.config"
                   CONFIG_SANDBOXES="$XDG_CONFIG_HOME/sandbox-mcp/sandboxes"
