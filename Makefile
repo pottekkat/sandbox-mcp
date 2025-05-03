@@ -28,3 +28,4 @@ images:
 	docker build --file sandboxes/python/Dockerfile --tag sandbox-mcp/python:latest sandboxes/python/
 	docker build --file sandboxes/javascript/Dockerfile --tag sandbox-mcp/javascript:latest sandboxes/javascript/
 	docker build --file sandboxes/network-tools/Dockerfile --tag sandbox-mcp/network-tools:latest sandboxes/network-tools/
+	docker build --file sandboxes/apisix/Dockerfile --tag sandbox-mcp/apisix:latest sandboxes/apisix/
