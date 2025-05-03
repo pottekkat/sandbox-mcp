@@ -1,5 +1,6 @@
 #!/bin/bash
 set -e
+set -x
 
 # Directory containing test files
 # NOTE: Relative to the root
@@ -59,6 +60,7 @@ for test_file in "$TEST_DIR"/*.json; do
         
         # Execute the inspector CLI command and capture output
         output=$("${cmd_parts[@]}" 2>&1)
+        echo "    Output: $output"
         
         # Extract expected and actual values
         expected_text=$(jq -r ".[$i].response.text" "$test_file" | tr -d '\r')
