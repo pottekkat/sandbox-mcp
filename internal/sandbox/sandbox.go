@@ -200,7 +200,11 @@ func NewSandboxToolHandler(sandboxConfig *config.SandboxConfig) func(context.Con
 		if sandboxConfig.ExecCommand() != nil {
 
 			// Wait for container to be running
-			if err := waitForContainer(execCtx, cli, resp.ID, 10*time.Second); err != nil {
+			timeout := 10 * time.Second
+			if os.Getenv("CI") == "true" {
+				timeout = 30 * time.Second
+			}
+			if err := waitForContainer(execCtx, cli, resp.ID, timeout); err != nil {
 				return nil, err
 			}
 
