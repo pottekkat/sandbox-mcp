@@ -39,9 +39,6 @@ jobs:
             - name: Build the MCP server
               run: go build -o dist/sandbox-mcp ./cmd/sandbox-mcp/main.go
             
-            - name: Set permissions
-              run: chmod -R 755 .
-              
             - name: Build sandboxes and Docker images
               run: |
                   # Get the absolute path to the built binary
