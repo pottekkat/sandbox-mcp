@@ -36,12 +36,24 @@ jobs:
                   sudo apt-get install -y jq
                   go mod download
             
-            - name: Build sandbox images
-              run: make images
-              
             - name: Build the MCP server
               run: go build -o dist/sandbox-mcp ./cmd/sandbox-mcp/main.go
               
+            - name: Build sandboxes and Docker images
+              run: |
+                  "$BINARY_PATH"
+                  # Get the absolute path to the built binary
+                  BINARY_PATH="$(pwd)/dist/sandbox-mcp"
+                  
+                  # Copy the sandboxes directory to the XDG config path
+                  export XDG_CONFIG_HOME="$HOME/.config"
+                  CONFIG_SANDBOXES="$XDG_CONFIG_HOME/sandbox-mcp/sandboxes"
+                  mkdir -p "$CONFIG_SANDBOXES"
+                  cp -r sandboxes/* "$CONFIG_SANDBOXES/"
+                  
+                  # Build Docker images for all sandboxes using the MCP binary
+                  "$BINARY_PATH" --build
+            
             - name: Prepare config for GitHub
               run: |
                   # Get the absolute path to the built binary
