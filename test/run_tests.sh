@@ -17,6 +17,10 @@ for test_file in "$TEST_DIR"/*.json; do
     fi
     
     tool_name=$(basename "$test_file" .json)
+    # If TOOL is set, only run tests for that tool
+    if [[ -n "$TOOL" && "$tool_name" != "$TOOL" ]]; then
+        continue
+    fi
     echo "→ Testing tool: $tool_name"
 
     # Check if the tool exists in the server
