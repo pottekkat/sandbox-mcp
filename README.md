@@ -121,6 +121,10 @@ Run Apache APISIX in a sandbox. Custom routes, plugins, and upstreams can be con
 
 Run JavaScript code using Node.js.
 
+### rust
+
+Run Rust code in a Linux sandbox.
+
 ## Development
 
 Fork and clone the repository:
