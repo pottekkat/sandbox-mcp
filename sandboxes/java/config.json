@@ -1,0 +1,39 @@
+{
+	"name": "java",
+	"description": "Run Java code",
+	"version": "0.1.0",
+	"image": "sandbox-mcp/java:latest",
+	"user": "sandbox",
+	"entrypoint": "main.java",
+	"timeout": 60,
+	"command": [
+		"java",
+		"--enable-preview",
+		"main.java"
+	],
+	"parameters": {
+		"additionalFiles": true
+	},
+	"security": {
+		"readOnly": false,
+		"capDrop": [
+			"all"
+		],
+		"securityOpt": [
+			"no-new-privileges:true"
+		],
+		"network": "none"
+	},
+	"resources": {
+		"cpu": 1,
+		"memory": 64,
+		"processes": 64,
+		"files": 96
+	},
+	"mount": {
+		"workdir": "/sandbox",
+		"tmpdirPrefix": "sandbox-mcp-",
+		"scriptPerms": "0755",
+		"readOnly": false
+	}
+}

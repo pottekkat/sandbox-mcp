@@ -125,6 +125,10 @@ Run JavaScript code using Node.js.
 
 Run Rust code in a Linux sandbox.
 
+### java
+
+Run Java code.
+
 ## Development
 
 Fork and clone the repository:
