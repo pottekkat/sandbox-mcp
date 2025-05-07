@@ -1,0 +1,57 @@
+[
+  {
+    "request": {
+      "main.java": "public class Main {\n    public static void main(String[] args) {\n        System.out.println(\"hello!\");\n    }\n}"
+    },
+    "response": {
+      "text": "hello!\n"
+    }
+  },
+  {
+    "request": {
+      "main.java": "import java.io.IOException;\nimport java.nio.file.Files;\nimport java.nio.file.Paths;\n\npublic class Main {\n    public static void main(String[] args) {\n        try {\n            String content = new String(Files.readAllBytes(Paths.get(\"hello.txt\")));\n            System.out.print(content);\n        } catch (IOException e) {\n            System.err.println(\"Error reading file: \" + e.getMessage());\n        }\n    }\n}",
+      "files": [
+        {
+          "filename": "hello.txt",
+          "content": "hello!"
+        }
+      ]
+    },
+    "response": {
+      "text": "hello!"
+    }
+  },
+  {
+    "request": {
+      "main.java": "public class Main {\n    public static void main(String[] args) {\n        // This will not compile - undefined variable\n        System.out.println(undefinedVariable);\n    }\n}"
+    },
+    "response": {
+      "text": "main.java:4: error: cannot find symbol\n        System.out.println(undefinedVariable);\n                           ^\n  symbol:   variable undefinedVariable\n  location: class Main\n1 error\nerror: compilation failed",
+      "isError": true
+    }
+  },
+  {
+    "request": {
+      "main.java": "public class Main {\n    public static void main(String[] args) {\n        try {\n            // Intentional division by zero\n            int result = 10 / 0;\n            System.out.println(\"Result: \" + result);\n        } catch (ArithmeticException e) {\n            System.err.println(\"Caught exception: \" + e.getClass().getSimpleName() + \" - \" + e.getMessage());\n        }\n    }\n}"
+    },
+    "response": {
+      "text": "\nStderr:\nCaught exception: ArithmeticException - / by zero"
+    }
+  },
+  {
+    "request": {
+      "main.java": "public class Main {\n    public static void main(String[] args) {\n        Person person = new Person(\"Alice\", 30);\n        System.out.println(person);\n    }\n}\n\nclass Person {\n    private String name;\n    private int age;\n    \n    public Person(String name, int age) {\n        this.name = name;\n        this.age = age;\n    }\n    \n    @Override\n    public String toString() {\n        return \"Person(name=\" + name + \", age=\" + age + \")\";\n    }\n}"
+    },
+    "response": {
+      "text": "Person(name=Alice, age=30)\n"
+    }
+  },
+  {
+    "request": {
+      "main.java": "public class Main {\n    public static void main(String[] args) {\n        // Test with regex pattern matching\n        String email = \"user@example.com\";\n        boolean isValid = email.matches(\"[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\\\.[a-zA-Z]{2,}\");\n        System.out.println(\"Email validation: \" + isValid);\n        \n        // Test with string manipulations\n        String text = \"Java Sandbox Test\";\n        System.out.println(\"Uppercase: \" + text.toUpperCase());\n        System.out.println(\"Length: \" + text.length());\n        System.out.println(\"Contains 'Sand': \" + text.contains(\"Sand\"));\n    }\n}"
+    },
+    "response": {
+      "text": "Email validation: true\nUppercase: JAVA SANDBOX TEST\nLength: 17\nContains 'Sand': true\n"
+    }
+  }
+]

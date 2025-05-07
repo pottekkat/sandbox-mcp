@@ -30,3 +30,4 @@ images:
 	docker build --file sandboxes/network-tools/Dockerfile --tag sandbox-mcp/network-tools:latest sandboxes/network-tools/
 	docker build --file sandboxes/apisix/Dockerfile --tag sandbox-mcp/apisix:latest sandboxes/apisix/
 	docker build --file sandboxes/rust/Dockerfile --tag sandbox-mcp/rust:latest sandboxes/rust/
+	docker build --file sandboxes/java/Dockerfile --tag sandbox-mcp/java:latest sandboxes/java/
