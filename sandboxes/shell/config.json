@@ -1,6 +1,10 @@
 {
 	"id": "shell",
 	"description": "Run shell commands in a Linux environment with strict security and network constraints.",
+	"hints": {
+		"isDistructive": false,
+		"isIdempotent": true
+	},
 	"version": "0.1.0",
 	"image": "sandbox-mcp/shell:latest",
 	"user": "sandbox",

@@ -2,6 +2,10 @@
 	"id": "go",
 	"name": "Golang",
 	"description": "Run Go code in an isolated sandbox.",
+	"hints": {
+		"isDistructive": false,
+		"isIdempotent": true
+	},
 	"version": "0.1.0",
 	"image": "sandbox-mcp/go:latest",
 	"user": "sandbox",

@@ -1,6 +1,10 @@
 {
 	"id": "python",
 	"description": "Run Python code in an isolated sandbox.",
+	"hints": {
+		"isDistructive": false,
+		"isIdempotent": true
+	},
 	"version": "0.1.0",
 	"image": "sandbox-mcp/python:latest",
 	"user": "sandbox",

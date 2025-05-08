@@ -1,6 +1,10 @@
 {
 	"id": "javascript",
 	"description": "Run JavaScript code using Node.js.",
+	"hints": {
+		"isDistructive": false,
+		"isIdempotent": true
+	},
 	"version": "0.1.0",
 	"image": "sandbox-mcp/javascript:latest",
 	"user": "sandbox",
