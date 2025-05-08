@@ -46,10 +46,14 @@ func NewSandboxTool(sandboxConfig *config.SandboxConfig) mcp.Tool {
 	options := []mcp.ToolOption{
 		// All tools have a description and an entrypoint
 		mcp.WithDescription(sandboxConfig.Description),
-		withEntrypoint(sandboxConfig.Entrypoint, fmt.Sprintf("%s code to execute in the sandbox", sandboxConfig.Name)),
+		withEntrypoint(sandboxConfig.Entrypoint, fmt.Sprintf("%s code to execute in the sandbox", sandboxConfig.Id)),
 		mcp.WithToolAnnotation(mcp.ToolAnnotation{
-
-		})
+			Title:           sandboxConfig.Name,
+			ReadOnlyHint:    sandboxConfig.Hints.IsReadOnly(sandboxConfig.Mount.ReadOnly, sandboxConfig.Security.ReadOnly),
+			DestructiveHint: sandboxConfig.Hints.IsDestructive(),
+			IdempotentHint:  sandboxConfig.Hints.IsIdempotent(),
+			OpenWorldHint:   sandboxConfig.Hints.IsExternalInteraction(sandboxConfig.Security.Network),
+		}),
 	}
 
 	// Add any specific additional files if provided in the config
@@ -63,7 +67,7 @@ func NewSandboxTool(sandboxConfig *config.SandboxConfig) mcp.Tool {
 	}
 
 	// Return a new tool with the tool name and provided options
-	return mcp.NewTool(sandboxConfig.Name, options...)
+	return mcp.NewTool(sandboxConfig.Id, options...)
 }
 
 // NewSandboxToolHandler creates a handler function for a sandbox tool

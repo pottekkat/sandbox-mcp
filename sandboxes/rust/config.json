@@ -1,5 +1,5 @@
 {
-	"name": "rust",
+	"id": "rust",
 	"description": "Run Rust code in an isolated sandbox.",
 	"version": "0.1.0",
 	"image": "sandbox-mcp/rust:latest",

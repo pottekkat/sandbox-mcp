@@ -1,5 +1,5 @@
 {
-	"name": "java",
+	"id": "java",
 	"description": "Run Java code",
 	"version": "0.1.0",
 	"image": "sandbox-mcp/java:latest",

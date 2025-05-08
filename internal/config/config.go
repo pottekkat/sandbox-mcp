@@ -9,6 +9,53 @@ import (
 	"time"
 )
 
+// SandboxHints stores hints provided to the MCP client
+type SandboxHints struct {
+	IsReadOnlyRaw            *bool `json:"isReadOnly,omitempty"`
+	IsDestructiveRaw         *bool `json:"isDestructive,omitempty"`
+	IsIdempotentRaw          *bool `json:"isIdempotent,omitempty"`
+	IsExternalInteractionRaw *bool `json:"isExternalInteraction,omitempty"`
+}
+
+// IsReadOnly returns true if the sandbox is meant to be read-only
+// If the raw value is not set, check the mount and security configurations
+func (h *SandboxHints) IsReadOnly(mountReadOnly bool, securityReadOnly bool) bool {
+	// If the raw value is set to either true or false, return that
+	if h.IsReadOnlyRaw != nil {
+		return *h.IsReadOnlyRaw
+	}
+	// If the raw value is not set, check the mount and security configurations
+	return mountReadOnly || securityReadOnly
+}
+
+// IsDestructive returns true if the sandbox is meant to be destructive
+// Defaults to false
+func (h *SandboxHints) IsDestructive() bool {
+	if h.IsDestructiveRaw != nil {
+		return *h.IsDestructiveRaw
+	}
+	return false
+}
+
+// IsIdempotent returns true if the sandbox is meant to be idempotent
+// Defaults to true
+func (h *SandboxHints) IsIdempotent() bool {
+	if h.IsIdempotentRaw != nil {
+		return *h.IsIdempotentRaw
+	}
+	return true
+}
+
+// IsExternalInteraction returns true if the sandbox is meant to interact with external systems
+// Defaults to the network configuration under security
+func (h *SandboxHints) IsExternalInteraction(securityNetwork string) bool {
+	if h.IsExternalInteractionRaw != nil {
+		return *h.IsExternalInteractionRaw
+	}
+	// If the raw value is not set, check the network configuration
+	return securityNetwork != "none"
+}
+
 // SandboxParameters represents the parameters configuration
 type SandboxParameters struct {
 	AdditionalFiles bool `json:"additionalFiles"`
@@ -54,8 +101,10 @@ func (m *SandboxMount) ScriptPerms() os.FileMode {
 // SandboxConfig represents the complete configuration for a sandbox environment
 type SandboxConfig struct {
 	// Basic configuration
+	Id          string            `json:"id"`
 	Name        string            `json:"name"`
 	Description string            `json:"description"`
+	Hints       SandboxHints      `json:"hints,omitempty"`
 	Version     string            `json:"version"`
 	Image       string            `json:"image"`
 	User        string            `json:"user"`
@@ -130,7 +179,7 @@ func LoadSandboxConfigs(sandboxDir string) (map[string]*SandboxConfig, error) {
 			return nil, fmt.Errorf("failed to parse config file %s: %v", configPath, err)
 		}
 
-		configs[config.Name] = &config
+		configs[config.Id] = &config
 	}
 
 	return configs, nil

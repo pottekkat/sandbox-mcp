@@ -1,5 +1,5 @@
 {
-	"name": "javascript",
+	"id": "javascript",
 	"description": "Run JavaScript code using Node.js.",
 	"version": "0.1.0",
 	"image": "sandbox-mcp/javascript:latest",

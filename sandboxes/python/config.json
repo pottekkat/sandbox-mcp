@@ -1,5 +1,5 @@
 {
-	"name": "python",
+	"id": "python",
 	"description": "Run Python code in an isolated sandbox.",
 	"version": "0.1.0",
 	"image": "sandbox-mcp/python:latest",

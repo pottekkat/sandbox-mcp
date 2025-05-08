@@ -55,7 +55,7 @@ For our example, `my-sandbox`, we will create aa `config.json` file with the fol
 
 ```json
 {
-	"name": "my-sandbox",
+	"id": "my-sandbox",
 	"description": "A simple Linux sandbox.",
 	"version": "0.1.0",
 	"image": "sandbox-mcp/my-sandbox:latest",

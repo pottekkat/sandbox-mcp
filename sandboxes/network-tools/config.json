@@ -1,5 +1,5 @@
 {
-	"name": "network-tools",
+	"id": "network-tools",
 	"description": "Use various network tools in an isolated Linux sandbox. The container has network access. See https://github.com/jonlabelle/docker-network-tools for a list of available tools.",
 	"version": "0.1.0",
 	"image": "sandbox-mcp/network-tools:latest",
