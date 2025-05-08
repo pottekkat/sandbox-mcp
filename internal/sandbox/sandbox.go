@@ -48,7 +48,7 @@ func NewSandboxTool(sandboxConfig *config.SandboxConfig) mcp.Tool {
 		mcp.WithDescription(sandboxConfig.Description),
 		withEntrypoint(sandboxConfig.Entrypoint, fmt.Sprintf("%s code to execute in the sandbox", sandboxConfig.Id)),
 		mcp.WithToolAnnotation(mcp.ToolAnnotation{
-			Title:           sandboxConfig.Name,
+			Title:           sandboxConfig.Name(),
 			ReadOnlyHint:    sandboxConfig.Hints.IsReadOnly(sandboxConfig.Mount.ReadOnly, sandboxConfig.Security.ReadOnly),
 			DestructiveHint: sandboxConfig.Hints.IsDestructive(),
 			IdempotentHint:  sandboxConfig.Hints.IsIdempotent(),

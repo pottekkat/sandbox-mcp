@@ -102,7 +102,7 @@ func (m *SandboxMount) ScriptPerms() os.FileMode {
 type SandboxConfig struct {
 	// Basic configuration
 	Id          string            `json:"id"`
-	Name        string            `json:"name"`
+	NameRaw     string            `json:"name"`
 	Description string            `json:"description"`
 	Hints       SandboxHints      `json:"hints,omitempty"`
 	Version     string            `json:"version"`
@@ -116,6 +116,14 @@ type SandboxConfig struct {
 	Security    SandboxSecurity   `json:"security"`
 	Resources   SandboxResources  `json:"resources"`
 	Mount       SandboxMount      `json:"mount"`
+}
+
+// Name returns the name if set, otherwise falls back to Id
+func (c *SandboxConfig) Name() string {
+	if c.NameRaw != "" {
+		return c.NameRaw
+	}
+	return c.Id
 }
 
 // Timeout returns the timeout as a time.Duration
