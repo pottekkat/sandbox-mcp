@@ -25,9 +25,9 @@
 	},
 	"resources": {
 		"cpu": 1,
-		"memory": 256,
-		"processes": 256,
-		"files": 256
+		"memory": 64,
+		"processes": 64,
+		"files": 96
 	},
 	"mount": {
 		"workdir": "/sandbox/src",

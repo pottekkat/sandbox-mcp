@@ -5,7 +5,7 @@
 	"image": "sandbox-mcp/network-tools:latest",
 	"user": "sandbox",
 	"entrypoint": "main.sh",
-	"timeout": 5,
+	"timeout": 60,
 	"command": [
 		"sh",
 		"main.sh"

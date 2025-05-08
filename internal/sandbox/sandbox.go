@@ -47,6 +47,9 @@ func NewSandboxTool(sandboxConfig *config.SandboxConfig) mcp.Tool {
 		// All tools have a description and an entrypoint
 		mcp.WithDescription(sandboxConfig.Description),
 		withEntrypoint(sandboxConfig.Entrypoint, fmt.Sprintf("%s code to execute in the sandbox", sandboxConfig.Name)),
+		mcp.WithToolAnnotation(mcp.ToolAnnotation{
+
+		})
 	}
 
 	// Add any specific additional files if provided in the config
