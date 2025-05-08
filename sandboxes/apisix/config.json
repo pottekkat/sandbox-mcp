@@ -1,6 +1,11 @@
 {
 	"id": "apisix",
+	"name": "Apache APISIX",
 	"description": "Run a small, sandboxed instance of Apache APISIX, which can be configured through YAML and can be interacted through a curl command provided in main.sh. For example, curl -sI `http://127.0.0.1:9080` | grep Server",
+	"hints": {
+		"isDistructive": false,
+		"isIdempotent": true
+	},
 	"version": "0.1.0",
 	"image": "sandbox-mcp/apisix:latest",
 	"user": "sandbox",

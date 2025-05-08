@@ -1,5 +1,6 @@
 {
 	"id": "go",
+	"name": "Golang",
 	"description": "Run Go code in an isolated sandbox.",
 	"version": "0.1.0",
 	"image": "sandbox-mcp/go:latest",
