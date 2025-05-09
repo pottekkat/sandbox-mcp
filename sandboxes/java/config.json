@@ -1,5 +1,6 @@
 {
 	"id": "java",
+	"name": "Java",
 	"description": "Run Java code",
 	"hints": {
 		"isDistructive": false,

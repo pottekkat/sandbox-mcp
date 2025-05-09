@@ -1,5 +1,6 @@
 {
 	"id": "javascript",
+	"name": "JavaScript",
 	"description": "Run JavaScript code using Node.js.",
 	"hints": {
 		"isDistructive": false,

@@ -1,5 +1,6 @@
 {
 	"id": "shell",
+	"name": "Linux Shell",
 	"description": "Run shell commands in a Linux environment with strict security and network constraints.",
 	"hints": {
 		"isDistructive": false,

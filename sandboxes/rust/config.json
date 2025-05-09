@@ -1,5 +1,6 @@
 {
 	"id": "rust",
+	"name": "Rust",
 	"description": "Run Rust code in an isolated sandbox.",
 	"hints": {
 		"isDistructive": false,

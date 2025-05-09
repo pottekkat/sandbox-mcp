@@ -1,5 +1,6 @@
 {
 	"id": "python",
+	"name": "Python",
 	"description": "Run Python code in an isolated sandbox.",
 	"hints": {
 		"isDistructive": false,
