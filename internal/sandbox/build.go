@@ -27,7 +27,7 @@ func BuildImage(ctx context.Context, sandboxConfig *config.SandboxConfig, basePa
 	defer cli.Close()
 
 	// Get the sandbox directory which contains the Dockerfile
-	sandboxDir := filepath.Join(basePath, sandboxConfig.Name)
+	sandboxDir := filepath.Join(basePath, sandboxConfig.Id)
 
 	// Create build context tar
 	buildCtx, err := archive.TarWithOptions(sandboxDir, &archive.TarOptions{})

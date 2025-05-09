@@ -49,7 +49,7 @@ func main() {
 		log.Println("Building Docker images for all sandboxes...")
 		for _, sandboxCfg := range configs {
 			if err := sandbox.BuildImage(context.Background(), sandboxCfg, cfg.SandboxesPath); err != nil {
-				log.Printf("Failed to build image for sandbox %s: %v", sandboxCfg.Name, err)
+				log.Printf("Failed to build image for sandbox %s: %v", sandboxCfg.Id, err)
 				continue
 			}
 		}
@@ -78,7 +78,7 @@ func main() {
 			// Add the tool to the server
 			s.AddTool(tool, handler)
 
-			log.Printf("Added %s tool from config", cfg.Name)
+			log.Printf("Added %s tool from config", cfg.Id)
 		}
 
 		log.Println("Starting Sandbox MCP server...")

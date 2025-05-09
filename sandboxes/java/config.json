@@ -1,6 +1,11 @@
 {
-	"name": "java",
+	"id": "java",
+	"name": "Java",
 	"description": "Run Java code",
+	"hints": {
+		"isDistructive": false,
+		"isIdempotent": true
+	},
 	"version": "0.1.0",
 	"image": "sandbox-mcp/java:latest",
 	"user": "sandbox",

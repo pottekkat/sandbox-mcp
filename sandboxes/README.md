@@ -1,17 +1,15 @@
 # Creating Your Own Sandbox
 
-Creating a sandbox is easy.
+_Creating sandboxes is easy_. Let's walk through creating a sandbox named `my-sandbox`, a simple Linux environment with a few pre-installed tools.
 
-First, create a new directory for your sandbox inside `$XDG_CONFIG_HOME/sandbox-mcp/sandboxes`. For example, let's create a sandbox called `my-sandbox`:
+First, create a new directory `my-sandbox` inside `$XDG_CONFIG_HOME/sandbox-mcp/sandboxes` to store the configuration:
 
 ```bash
 mkdir $XDG_CONFIG_HOME/sandbox-mcp/sandboxes/my-sandbox
 cd $XDG_CONFIG_HOME/sandbox-mcp/sandboxes/my-sandbox
 ```
 
-A sandbox consists of a Dockerfile and a JSON configuration file. Both of these files are used to create and configure the sandbox.
-
-The `my-sandbox` sandbox will be a simple Linux environment with a few tools pre-installed. So its Dockerfile will look like this:
+Inside the directory, add a `Dockerfile` that sets up the sandbox:
 
 ```dockerfile
 # Use a lightweight Debian image
@@ -49,19 +47,22 @@ Then, build and tag the Docker image:
 docker build --tag sandbox-mcp/my-sandbox:latest .
 ```
 
-Now we have to create the JSON configuration file. This file contains the configuration for the sandbox, including the name and description, command to run, and container configuration.
-
-For our example, `my-sandbox`, we will create aa `config.json` file with the following configurations:
+In addition to the Dockerfile, a sandbox must have a JSON configuration file `config.json`. This file stores the configuration of the sandbox, as shown below for `my-sandbox`:
 
 ```json
 {
-	"name": "my-sandbox",
+	"id": "my-sandbox",
+	"name": "My Sandbox",
 	"description": "A simple Linux sandbox.",
+	"hints": {
+		"isDestructive": false,
+		"isIdempotent": true
+	},
 	"version": "0.1.0",
 	"image": "sandbox-mcp/my-sandbox:latest",
 	"user": "sandbox",
 	"entrypoint": "main.sh",
-	"timeout": 5,
+	"timeout": 60,
 	"command": [
 		"sh",
 		"main.sh"
@@ -94,13 +95,42 @@ For our example, `my-sandbox`, we will create aa `config.json` file with the fol
 }
 ```
 
-Here's what's happening:
+Each of these properties is explained below:
 
-1. The `entrypoint` is the file where the input from the LLM is stored to be executed as described by `command`.
-2. The `timeout` is the execution time limit. This can be useful to prevent the sandbox from running indefinitely.
-3. The `parameters` property allows you to configure additional parameters for the sandbox tool. Here, we set `additionalFiles` to `true`, which allows the LLMs to pass additional files. Another valid value is `files`, which let's you configure any required files which should be passed along with the `entrypoint`. See the [go sandbox](./go/config.json) for an example.
-4. The `security`, `resources`, and `mount` properties directly translate to Docker container configurations.
+- `id`: Unique identifier for the sandbox.
+- `name`: Human-readable name for the sandbox.
+- `description`: Human-readable description for the sandbox.
+- `hints`: Additional metadata about the sandbox behavior to help clients understand how to use it.
+	- `isReadOnly`: If `true`, indicates that the sandbox is read-only. Defaults to the value of `readOnly` in the `security` and `mount` configuration.
+	- `isDestructive`: If `true`, indicates that the sandbox performs destructive updates. Defaults to `false`.
+	- `isIdempotent`: If `true`, indicates that calling the sandbox multiple times with the same parameters will have the same effect. Defaults to `true`.
+	- `isExternalInteraction`: If `true`, indicates that the sandbox could interact with external entities. Defaults to the `network` property in the `security` configuration (`false` if `network` is set to `none`, `true` otherwise).
+- `version`: Semantic version of the sandbox. It does not do much right now.
+- `image`: Docker image and tag to use for the sandbox.
+- `user`: User to run the sandbox as.
+- `entrypoint`: File where the input from the client is stored to be executed as described by `command`. For example, the [`shell` sandbox](./shell/config.json) has an `entrypoint` of `main.sh`, and the [`go` sandbox](./go/config.json) has an `entrypoint` of `main.go`.
+- `timeout`: Maximum execution time of the sandbox in seconds to prevent running indefinitely.
+- `before`: Command to run before the client input is executed. See the [`apisix` sandbox](./apisix/config.json) for an example.
+- `command`: Command to execute in the sandbox. It typically contains the `entrypoint` file and additional arguments. For example, the [`shell` sandbox](./shell/config.json) has a `command` of `["sh", "main.sh"]`, and the [`go` sandbox](./go/config.json) has a `command` of `["go", "run", "main.go"]`.
+- `parameters`: Additional parameters to accept from the client.
+	- `additionalFiles`: If `true`, allows the client to pass additional files to the sandbox.
+	- `files`: Additional required files to be passed along with the `entrypoint`. For example, the [`go` sandbox](./go/config.json) has a `files` property of `go.mod` to include the `go.mod` file in the sandbox.
+- `security`: Security configuration for the sandbox. Directly translates to Docker container configurations.
+	- `readOnly`: If `true`, the sandbox is read-only.
+	- `capDrop`: Capabilities to drop from the sandbox.
+	- `securityOpt`: Security options to pass to the sandbox.
+	- `network`: Network mode to use for the sandbox.
+- `resources`: Resource configuration for the sandbox.
+	- `cpu`: CPU limit for the sandbox.
+	- `memory`: Memory limit for the sandbox.
+	- `processes`: Process limit for the sandbox.
+	- `files`: File descriptor limit for the sandbox.
+- `mount`: Mount configuration for the sandbox.
+	- `workdir`: Working directory for the sandbox.
+	- `tmpdirPrefix`: Prefix for the temporary directory created for the sandbox.
+	- `scriptPerms`: Permissions for the `entrypoint` file.
+	- `readOnly`: If `true`, the sandbox (volume mount) is read-only.
 
-Once you have configured the sandbox, you can reload the MCP host/client application you are using (e.g., Cursor IDE or Claude Desktop) to apply the changes. You will see `my-sandbox` in the list of available tools.
+After configuring the sandbox, you can reload the MCP host/client application (e.g., Cursor IDE or Claude Desktop) to apply the changes. You will see `my-sandbox` in the list of available tools.
 
-Feel free to share the sandboxes your create with the community!
+Feel free to share the sandboxes you create with the community!
