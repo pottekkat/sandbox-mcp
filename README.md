@@ -90,44 +90,21 @@ Add this to your `claude_desktop_config.json` for Claude Desktop or `mcp.json` f
 
 ## Available Sandboxes
 
-### shell
-
-Run shell commands in a Linux environment with strict security and network constraints.
-
-### python
-
-Run Python code with a set of pre-installed libraries.
+| Sandbox ID | Description |
+|------------|-------------|
+| [shell](/sandboxes/shell) | A secure, isolated Linux environment for running lightweight commands that does not require network access. |
+| [python](/sandboxes/python) | Safely execute Python code in a secure, isolated environment. |
+| [rust](/sandboxes/rust) | Compile and run Rust code in an isolated environment. |
+| [network-tools](/sandboxes/network-tools) | Use various network utilities in an isolated Linux sandbox. Perfect for network diagnostics and troubleshooting. See https://github.com/jonlabelle/docker-network-tools for a list of available tools. |
+| [go](/sandboxes/go) | Run Go code securely in an isolated environment with network access. |
+| [javascript](/sandboxes/javascript) | Run JavaScript code in an isolated environment using Node.js. |
+| [apisix](/sandboxes/apisix) | Run a lightweight instance of Apache APISIX, which can be configured through a YAML file and can be interacted through the curl command provided in the main.sh file. For example, curl -sI `http://127.0.0.1:9080/ip`. |
+| [java](/sandboxes/java) | Compile and run Java code in an isolated sandbox. Supports Java preview features. |
 
 > [!IMPORTANT]
 > ### Your Own Sandbox
 > 
 > You can create and add your own sandboxes in `$XDG_CONFIG_HOME/sandbox-mcp/sandboxes`. A sandbox is essentially a Dockerfile and a JSON configuration. Check out the [examples and the guide](/sandboxes) to learn more.
-
-### network-tools
-
-Use various network tools in an isolated Linux sandbox. The container has network access.
-
-See [jonlabelle/docker-network-tools](https://github.com/jonlabelle/docker-network-tools) for a list of available tools.
-
-### go
-
-Run simple Go code in an isolated sandbox.
-
-### apisix
-
-Run Apache APISIX in a sandbox. Custom routes, plugins, and upstreams can be configured through a YAML file and it can be tested using `curl` commands. Has network access.
-
-### javascript
-
-Run JavaScript code using Node.js.
-
-### rust
-
-Run Rust code in a Linux sandbox.
-
-### java
-
-Run Java code.
 
 ## Development
 
