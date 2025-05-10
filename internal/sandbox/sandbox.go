@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"os"
 	"path/filepath"
+	"strings"
 	"time"
 
 	"github.com/docker/docker/api/types/container"
@@ -45,8 +46,10 @@ func waitForContainer(ctx context.Context, cli *client.Client, containerID strin
 func NewSandboxTool(sandboxConfig *config.SandboxConfig) mcp.Tool {
 	options := []mcp.ToolOption{
 		// All tools have a description and an entrypoint
-		mcp.WithDescription(sandboxConfig.Description),
-		withEntrypoint(sandboxConfig.Entrypoint, fmt.Sprintf("%s code to execute in the sandbox", sandboxConfig.Name())),
+		mcp.WithDescription(generateSandboxDescription(sandboxConfig)),
+		withEntrypoint(sandboxConfig.Entrypoint, fmt.Sprintf("Code to be stored in a file named `%s` and executed with the command `%s`.",
+			sandboxConfig.Entrypoint,
+			strings.Join(sandboxConfig.Command, " "))),
 		mcp.WithToolAnnotation(mcp.ToolAnnotation{
 			Title:           sandboxConfig.Name(),
 			ReadOnlyHint:    mcp.BoolPtr(sandboxConfig.Hints.IsReadOnly(sandboxConfig.Mount.ReadOnly, sandboxConfig.Security.ReadOnly)),
@@ -305,4 +308,60 @@ func NewSandboxToolHandler(sandboxConfig *config.SandboxConfig) func(context.Con
 
 		return nil, fmt.Errorf("unexpected error: container wait returned no result")
 	}
+}
+
+// generateSandboxDescription creates a comprehensive description of the sandbox environment
+func generateSandboxDescription(sandboxConfig *config.SandboxConfig) string {
+	// Start with the base description from the config
+	description := sandboxConfig.Description
+
+	// Ensure the base description ends with a period if it doesn't already
+	if !strings.HasSuffix(description, ".") {
+		description += "."
+	}
+
+	// Add information about the sandbox environment
+	description += fmt.Sprintf(" This code will run in a sandboxed Docker container using the `%s` image.", sandboxConfig.Image)
+
+	// Add information about resource limitations
+	description += fmt.Sprintf(" Resource limits: %d CPU units, %d MB memory, %d processes.",
+		sandboxConfig.Resources.CPU,
+		sandboxConfig.Resources.Memory,
+		sandboxConfig.Resources.Processes)
+
+	// Add network information
+	if sandboxConfig.Security.Network == "none" {
+		description += " This sandbox has no network access."
+	} else {
+		description += fmt.Sprintf(" This sandbox has %s network access.", sandboxConfig.Security.Network)
+	}
+
+	// Add information about required files
+	if len(sandboxConfig.Parameters.Files) > 0 {
+		description += " Required additional files:"
+		for i, file := range sandboxConfig.Parameters.Files {
+			if i > 0 {
+				description += ","
+			}
+			description += fmt.Sprintf(" `%s`: %s", file.Name, file.Description)
+		}
+		description += "."
+	}
+
+	// Add information about additional files support
+	if sandboxConfig.Parameters.AdditionalFiles {
+		description += " This sandbox supports uploading additional files."
+	}
+
+	// Add information about filesystem access
+	if sandboxConfig.Mount.ReadOnly || sandboxConfig.Security.ReadOnly {
+		description += " This sandbox has read-only filesystem access."
+	} else {
+		description += " This sandbox has read-write filesystem access."
+	}
+
+	// Add timeout information
+	description += fmt.Sprintf(" Execution timeout: %d seconds.", sandboxConfig.TimeoutRaw)
+
+	return description
 }
