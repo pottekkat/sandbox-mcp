@@ -320,48 +320,71 @@ func generateSandboxDescription(sandboxConfig *config.SandboxConfig) string {
 		description += "."
 	}
 
-	// Add information about the sandbox environment
-	description += fmt.Sprintf(" This code will run in a sandboxed Docker container using the `%s` image.", sandboxConfig.Image)
+	// Add a space after the description
+	description += " "
 
-	// Add information about resource limitations
-	description += fmt.Sprintf(" Resource limits: %d CPU units, %d MB memory, %d processes.",
+	// Create a more natural description of the sandbox environment with inline pluralization
+	coreText := "cores"
+	if sandboxConfig.Resources.CPU == 1 {
+		coreText = "core"
+	}
+
+	description += fmt.Sprintf("This sandbox uses the `%s` Docker image, with %d CPU %s, %d MB RAM, and %d processes.",
+		sandboxConfig.Image,
 		sandboxConfig.Resources.CPU,
+		coreText,
 		sandboxConfig.Resources.Memory,
 		sandboxConfig.Resources.Processes)
 
-	// Add network information
+	// Add network and filesystem information
 	if sandboxConfig.Security.Network == "none" {
-		description += " This sandbox has no network access."
+		description += " It has no network access"
 	} else {
-		description += fmt.Sprintf(" This sandbox has %s network access.", sandboxConfig.Security.Network)
+		description += fmt.Sprintf(" It has %s network access", sandboxConfig.Security.Network)
+	}
+
+	if sandboxConfig.Mount.ReadOnly || sandboxConfig.Security.ReadOnly {
+		description += " and read-only filesystem permissions."
+	} else {
+		description += " and read-write filesystem permissions."
 	}
 
 	// Add information about required files
 	if len(sandboxConfig.Parameters.Files) > 0 {
-		description += " Required additional files:"
-		for i, file := range sandboxConfig.Parameters.Files {
-			if i > 0 {
-				description += ","
+		if len(sandboxConfig.Parameters.Files) == 1 {
+			file := sandboxConfig.Parameters.Files[0]
+			description += fmt.Sprintf(" It requires a `%s` file", file.Name)
+			if file.Description != "" {
+				description += fmt.Sprintf(" (%s)", file.Description)
 			}
-			description += fmt.Sprintf(" `%s`: %s", file.Name, file.Description)
+		} else {
+			description += " It requires the following files:"
+			for i, file := range sandboxConfig.Parameters.Files {
+				if i > 0 {
+					if i == len(sandboxConfig.Parameters.Files)-1 {
+						description += " and"
+					} else {
+						description += ","
+					}
+				}
+				description += fmt.Sprintf(" `%s`", file.Name)
+				if file.Description != "" {
+					description += fmt.Sprintf(" (%s)", file.Description)
+				}
+			}
 		}
-		description += "."
-	}
 
-	// Add information about additional files support
-	if sandboxConfig.Parameters.AdditionalFiles {
-		description += " This sandbox supports uploading additional files."
-	}
-
-	// Add information about filesystem access
-	if sandboxConfig.Mount.ReadOnly || sandboxConfig.Security.ReadOnly {
-		description += " This sandbox has read-only filesystem access."
-	} else {
-		description += " This sandbox has read-write filesystem access."
+		if sandboxConfig.Parameters.AdditionalFiles {
+			description += " and supports uploading additional files."
+		} else {
+			description += "."
+		}
+	} else if sandboxConfig.Parameters.AdditionalFiles {
+		description += " It supports uploading additional files."
 	}
 
 	// Add timeout information
-	description += fmt.Sprintf(" Execution timeout: %d seconds.", sandboxConfig.TimeoutRaw)
+	description += fmt.Sprintf(" The execution is limited to %d seconds.", sandboxConfig.TimeoutRaw)
 
 	return description
 }
