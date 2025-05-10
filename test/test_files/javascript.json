@@ -1,7 +1,7 @@
 [
   {
     "request": {
-      "index.js": "console.log(\"Hello from JavaScript!\");"
+      "index_js": "console.log(\"Hello from JavaScript!\");"
     },
     "response": {
       "text": "Hello from JavaScript!\n"
@@ -9,7 +9,7 @@
   },
   {
     "request": {
-      "index.js": "const fs = require('fs');\nconst content = fs.readFileSync('test_file.txt', 'utf8');\nconsole.log(content);",
+      "index_js": "const fs = require('fs');\nconst content = fs.readFileSync('test_file.txt', 'utf8');\nconsole.log(content);",
       "files": [
         {
           "filename": "test_file.txt",
@@ -23,7 +23,7 @@
   },
   {
     "request": {
-      "index.js": "const nonExistentFunction = require('non-existent-module');\nconsole.log(\"This won't execute\");"
+      "index_js": "const nonExistentFunction = require('non-existent-module');\nconsole.log(\"This won't execute\");"
     },
     "response": {
       "text": "Cannot find module 'non-existent-module'",
@@ -32,7 +32,7 @@
   },
   {
     "request": {
-      "index.js": "console.log(process.version);\nconsole.log(process.env.HOME);"
+      "index_js": "console.log(process.version);\nconsole.log(process.env.HOME);"
     },
     "response": {
       "text": "/sandbox"
@@ -40,7 +40,7 @@
   },
   {
     "request": {
-      "index.js": "throw new Error('Test error');"
+      "index_js": "throw new Error('Test error');"
     },
     "response": {
       "text": "Error: Test error",

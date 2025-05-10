@@ -1,8 +1,8 @@
 [
   {
     "request": {
-      "main.sh": "curl -sI \"http://127.0.0.1:9080\" | grep Server",
-      "apisix.yaml": "routes:\n  - id: 1\n    uri: /*\n    upstream:\n      nodes:\n        \"127.0.0.1:9001\": 1\n      type: roundrobin\n#END"
+      "main_sh": "curl -sI \"http://127.0.0.1:9080\" | grep Server",
+      "apisix_yaml": "routes:\n  - id: 1\n    uri: /*\n    upstream:\n      nodes:\n        \"127.0.0.1:9001\": 1\n      type: roundrobin\n#END"
     },
     "response": {
       "text": "Server: APISIX/3.9.0"
@@ -10,8 +10,8 @@
   },
   {
     "request": {
-      "main.sh": "curl -s \"http://127.0.0.1:9080/anything\"",
-      "apisix.yaml": "routes:\n  - id: 1\n    uri: /anything\n    plugins:\n      response-rewrite:\n        body: '{\"message\":\"Hello from APISIX!\"}'\n        headers:\n          content-type: application/json\n    upstream:\n      nodes:\n        \"httpbin.org:80\": 1\n      type: roundrobin\n#END"
+      "main_sh": "curl -s \"http://127.0.0.1:9080/anything\"",
+      "apisix_yaml": "routes:\n  - id: 1\n    uri: /anything\n    plugins:\n      response-rewrite:\n        body: '{\"message\":\"Hello from APISIX!\"}'\n        headers:\n          content-type: application/json\n    upstream:\n      nodes:\n        \"httpbin.org:80\": 1\n      type: roundrobin\n#END"
     },
     "response": {
       "text": "{\"message\":\"Hello from APISIX!\"}"
@@ -19,8 +19,8 @@
   },
   {
     "request": {
-      "main.sh": "curl -s \"http://127.0.0.1:9080/ip\"",
-      "apisix.yaml": "routes:\n  - id: 1\n    uri: /headers\n    upstream:\n      nodes:\n        \"httpbin.org:80\": 1\n      type: roundrobin\n#END"
+      "main_sh": "curl -s \"http://127.0.0.1:9080/ip\"",
+      "apisix_yaml": "routes:\n  - id: 1\n    uri: /headers\n    upstream:\n      nodes:\n        \"httpbin.org:80\": 1\n      type: roundrobin\n#END"
     },
     "response": {
       "text": "{\"error_msg\":\"404 Route Not Found\"}"
@@ -28,8 +28,8 @@
   },
   {
     "request": {
-      "main.sh": "curl -s \"http://127.0.0.1:9080/non-existent-path\"",
-      "apisix.yaml": "routes:\n  - id: 1\n    uri: /specific-path\n    upstream:\n      nodes:\n        \"httpbin.org:80\": 1\n      type: roundrobin\n#END"
+      "main_sh": "curl -s \"http://127.0.0.1:9080/non-existent-path\"",
+      "apisix_yaml": "routes:\n  - id: 1\n    uri: /specific-path\n    upstream:\n      nodes:\n        \"httpbin.org:80\": 1\n      type: roundrobin\n#END"
     },
     "response": {
       "text": "{\"error_msg\":\"404 Route Not Found\"}"
@@ -37,8 +37,8 @@
   },
   {
     "request": {
-      "main.sh": "curl -s \"http://127.0.0.1:9080/headers\"",
-      "apisix.yaml": "routes:\n  - id: 1\n    uri: /headers\n    upstream:\n      nodes:\n        \"httpbin.org:80\": 1\n      type: roundrobin\n#END"
+      "main_sh": "curl -s \"http://127.0.0.1:9080/headers\"",
+      "apisix_yaml": "routes:\n  - id: 1\n    uri: /headers\n    upstream:\n      nodes:\n        \"httpbin.org:80\": 1\n      type: roundrobin\n#END"
     },
     "response": {
       "text": "\"headers\":"
@@ -46,8 +46,8 @@
   },
   {
     "request": {
-      "main.sh": "curl -s \"http://127.0.0.1:9080/ip\" -H \"apikey: secret-key\"",
-      "apisix.yaml": "consumers:\n  - username: tom\n    plugins:\n      key-auth:\n        key: secret-key\n\nroutes:\n  - id: 1\n    uri: /ip\n    plugins:\n      key-auth: {}\n    upstream:\n      nodes:\n        \"httpbin.org:80\": 1\n      type: roundrobin\n#END"
+      "main_sh": "curl -s \"http://127.0.0.1:9080/ip\" -H \"apikey: secret-key\"",
+      "apisix_yaml": "consumers:\n  - username: tom\n    plugins:\n      key-auth:\n        key: secret-key\n\nroutes:\n  - id: 1\n    uri: /ip\n    plugins:\n      key-auth: {}\n    upstream:\n      nodes:\n        \"httpbin.org:80\": 1\n      type: roundrobin\n#END"
     },
     "response": {
       "text": "\"origin\":"

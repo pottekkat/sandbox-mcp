@@ -1,7 +1,7 @@
 [
   {
     "request": {
-      "main.rs": "fn main() {\n    println!(\"hello!\");\n}"
+      "main_rs": "fn main() {\n    println!(\"hello!\");\n}"
     },
     "response": {
       "text": "hello!\n"
@@ -9,7 +9,7 @@
   },
   {
     "request": {
-      "main.rs": "use std::fs;\n\nfn main() {\n    match fs::read_to_string(\"hello.txt\") {\n        Ok(content) => print!(\"{}\", content),\n        Err(e) => eprintln!(\"Error reading file: {}\", e),\n    }\n}",
+      "main_rs": "use std::fs;\n\nfn main() {\n    match fs::read_to_string(\"hello.txt\") {\n        Ok(content) => print!(\"{}\", content),\n        Err(e) => eprintln!(\"Error reading file: {}\", e),\n    }\n}",
       "files": [
         {
           "filename": "hello.txt",
@@ -23,7 +23,7 @@
   },
   {
     "request": {
-      "main.rs": "use invalid_package;\n\nfn main() {\n    println!(\"This won't compile\");\n}"
+      "main_rs": "use invalid_package;\n\nfn main() {\n    println!(\"This won't compile\");\n}"
     },
     "response": {
       "text": "error[E0432]: unresolved import `invalid_package`\n --> main.rs:1:5\n  |\n1 | use invalid_package;\n  |     ^^^^^^^^^^^^^^^ no `invalid_package` in the root\n\nerror: aborting due to 1 previous error\n\nFor more information about this error, try `rustc --explain E0432`.",
@@ -32,7 +32,7 @@
   },
   {
     "request": {
-      "main.rs": "#[derive(Debug)]\nstruct Person {\n    name: String,\n    age: u8,\n}\n\nfn main() {\n    let person = Person {\n        name: String::from(\"Alice\"),\n        age: 30,\n    };\n    \n    println!(\"{:?}\", person);\n}"
+      "main_rs": "#[derive(Debug)]\nstruct Person {\n    name: String,\n    age: u8,\n}\n\nfn main() {\n    let person = Person {\n        name: String::from(\"Alice\"),\n        age: 30,\n    };\n    \n    println!(\"{:?}\", person);\n}"
     },
     "response": {
       "text": "Person { name: \"Alice\", age: 30 }"
@@ -40,7 +40,7 @@
   },
   {
     "request": {
-      "main.rs": "use std::fs;\n\nfn main() {\n    match fs::read_to_string(\"nonexistent_file.txt\") {\n        Ok(content) => println!(\"Content: {}\", content),\n        Err(e) => eprintln!(\"Error: {}\", e),\n    }\n}"
+      "main_rs": "use std::fs;\n\nfn main() {\n    match fs::read_to_string(\"nonexistent_file.txt\") {\n        Ok(content) => println!(\"Content: {}\", content),\n        Err(e) => eprintln!(\"Error: {}\", e),\n    }\n}"
     },
     "response": {
       "text": "Stderr:\nError: No such file or directory (os error 2)",
@@ -49,7 +49,7 @@
   },
   {
     "request": {
-      "main.rs": "fn main() {\n    let mut numbers = vec![1, 2, 3, 4, 5];\n    numbers.push(6);\n    \n    let sum: i32 = numbers.iter().sum();\n    println!(\"Sum: {}\", sum);\n    \n    let doubled: Vec<i32> = numbers.iter().map(|&x| x * 2).collect();\n    println!(\"Doubled: {:?}\", doubled);\n}"
+      "main_rs": "fn main() {\n    let mut numbers = vec![1, 2, 3, 4, 5];\n    numbers.push(6);\n    \n    let sum: i32 = numbers.iter().sum();\n    println!(\"Sum: {}\", sum);\n    \n    let doubled: Vec<i32> = numbers.iter().map(|&x| x * 2).collect();\n    println!(\"Doubled: {:?}\", doubled);\n}"
     },
     "response": {
       "text": "Sum: 21\nDoubled: [2, 4, 6, 8, 10, 12]\n"
@@ -57,7 +57,7 @@
   },
   {
     "request": {
-      "main.rs": "fn main() {\n    // Test more complex error handling with Result and Option\n    let result: Result<i32, &str> = Err(\"something went wrong\");\n    \n    if let Err(e) = result {\n        eprintln!(\"Error occurred: {}\", e);\n    }\n    \n    // Testing Option\n    let some_value: Option<i32> = Some(42);\n    let none_value: Option<i32> = None;\n    \n    println!(\"Some value: {}\", some_value.unwrap_or(0));\n    println!(\"None value: {}\", none_value.unwrap_or(0));\n}"
+      "main_rs": "fn main() {\n    // Test more complex error handling with Result and Option\n    let result: Result<i32, &str> = Err(\"something went wrong\");\n    \n    if let Err(e) = result {\n        eprintln!(\"Error occurred: {}\", e);\n    }\n    \n    // Testing Option\n    let some_value: Option<i32> = Some(42);\n    let none_value: Option<i32> = None;\n    \n    println!(\"Some value: {}\", some_value.unwrap_or(0));\n    println!(\"None value: {}\", none_value.unwrap_or(0));\n}"
     },
     "response": {
       "text": "Some value: 42\nNone value: 0\n\nStderr:\nError occurred: something went wrong"
@@ -65,7 +65,7 @@
   },
   {
     "request": {
-      "main.rs": "use std::sync::mpsc;\nuse std::thread;\n\nfn main() {\n    let (tx, rx) = mpsc::channel();\n    \n    thread::spawn(move || {\n        tx.send(\"Hello from another thread!\").unwrap();\n    });\n    \n    let received = rx.recv().unwrap();\n    println!(\"{}\", received);\n}"
+      "main_rs": "use std::sync::mpsc;\nuse std::thread;\n\nfn main() {\n    let (tx, rx) = mpsc::channel();\n    \n    thread::spawn(move || {\n        tx.send(\"Hello from another thread!\").unwrap();\n    });\n    \n    let received = rx.recv().unwrap();\n    println!(\"{}\", received);\n}"
     },
     "response": {
       "text": "Hello from another thread!\n"

@@ -1,7 +1,7 @@
 [
   {
     "request": {
-      "main.py": "print(\"Hello from Python!\")"
+      "main_py": "print(\"Hello from Python!\")"
     },
     "response": {
       "text": "Hello from Python!\n"
@@ -9,7 +9,7 @@
   },
   {
     "request": {
-      "main.py": "with open(\"test_file.txt\", \"r\") as f:\n    content = f.read()\n    print(content)",
+      "main_py": "with open(\"test_file.txt\", \"r\") as f:\n    content = f.read()\n    print(content)",
       "files": [
         {
           "filename": "test_file.txt",
@@ -23,7 +23,7 @@
   },
   {
     "request": {
-      "main.py": "import non_existent_module\nprint(\"This won't execute\")"
+      "main_py": "import non_existent_module\nprint(\"This won't execute\")"
     },
     "response": {
       "text": "ModuleNotFoundError: No module named 'non_existent_module'",
@@ -32,7 +32,7 @@
   },
   {
     "request": {
-      "main.py": "a = 1/0"
+      "main_py": "a = 1/0"
     },
     "response": {
       "text": "ZeroDivisionError: division by zero",
@@ -41,7 +41,7 @@
   },
   {
     "request": {
-      "main.py": "import sys\nprint(sys.version)\nimport os\nprint(os.environ.get('HOME'))"
+      "main_py": "import sys\nprint(sys.version)\nimport os\nprint(os.environ.get('HOME'))"
     },
     "response": {
       "text": "/sandbox"

@@ -1,7 +1,7 @@
 [
   {
     "request": {
-      "main.sh": "ping -c 1 google.com"
+      "main_sh": "ping -c 1 google.com"
     },
     "response": {
       "text": "google.com ping statistics"
@@ -9,7 +9,7 @@
   },
   {
     "request": {
-      "main.sh": "nslookup google.com | head -n 5"
+      "main_sh": "nslookup google.com | head -n 5"
     },
     "response": {
       "text": "Server:"
@@ -17,7 +17,7 @@
   },
   {
     "request": {
-      "main.sh": "curl -s https://httpbin.org/get | head -n 5"
+      "main_sh": "curl -s https://httpbin.org/get | head -n 5"
     },
     "response": {
       "text": "\"args\":"
@@ -25,7 +25,7 @@
   },
   {
     "request": {
-      "main.sh": "ifconfig -a | head -n 3"
+      "main_sh": "ifconfig -a | head -n 3"
     },
     "response": {
       "text": "eth0: flags="
@@ -33,7 +33,7 @@
   },
   {
     "request": {
-      "main.sh": "non-existent-command"
+      "main_sh": "non-existent-command"
     },
     "response": {
       "text": "not found",

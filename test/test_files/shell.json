@@ -1,7 +1,7 @@
 [
     {
         "request": {
-            "main.sh": "echo hello!"
+            "main_sh": "echo hello!"
         },
         "response": {
             "text": "hello!\n"
@@ -9,7 +9,7 @@
     },
     {
         "request": {
-            "main.sh": "cat hello.txt",
+            "main_sh": "cat hello.txt",
             "files": [
                 {
                     "filename": "hello.txt",
@@ -23,7 +23,7 @@
     },
     {
         "request": {
-            "main.sh": "invalid-command"
+            "main_sh": "invalid-command"
         },
         "response": {
             "text": "not found",
