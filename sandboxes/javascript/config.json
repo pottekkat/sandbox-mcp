@@ -1,7 +1,7 @@
 {
 	"id": "javascript",
 	"name": "JavaScript",
-	"description": "Run JavaScript code using Node.js.",
+	"description": "Run JavaScript code in an isolated environment using Node.js.",
 	"hints": {
 		"isDistructive": false,
 		"isIdempotent": true

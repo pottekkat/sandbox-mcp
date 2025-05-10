@@ -1,7 +1,7 @@
 {
 	"id": "rust",
 	"name": "Rust",
-	"description": "Run Rust code in an isolated sandbox.",
+	"description": "Compile and run Rust code in an isolated environment.",
 	"hints": {
 		"isDistructive": false,
 		"isIdempotent": true

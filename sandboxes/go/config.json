@@ -1,7 +1,7 @@
 {
 	"id": "go",
 	"name": "Golang",
-	"description": "Run Go code in an isolated sandbox.",
+	"description": "Run Go code securely in an isolated environment with network access.",
 	"hints": {
 		"isDistructive": false,
 		"isIdempotent": true

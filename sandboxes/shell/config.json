@@ -1,7 +1,7 @@
 {
 	"id": "shell",
 	"name": "Linux Shell",
-	"description": "Run shell commands in a Linux environment with strict security and network constraints.",
+	"description": "A secure, isolated Linux environment for running lightweight commands that does not require network access.",
 	"hints": {
 		"isDestructive": false,
 		"isIdempotent": true

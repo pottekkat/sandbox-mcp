@@ -1,7 +1,7 @@
 {
 	"id": "python",
 	"name": "Python",
-	"description": "Run Python code in an isolated sandbox.",
+	"description": "Safely execute Python code in a secure, isolated environment.",
 	"hints": {
 		"isDistructive": false,
 		"isIdempotent": true

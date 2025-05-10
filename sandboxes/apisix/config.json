@@ -1,7 +1,7 @@
 {
 	"id": "apisix",
 	"name": "Apache APISIX",
-	"description": "Run a small, sandboxed instance of Apache APISIX, which can be configured through YAML and can be interacted through a curl command provided in main.sh. For example, curl -sI `http://127.0.0.1:9080` | grep Server",
+	"description": "Run a lightweight instance of Apache APISIX, which can be configured through a YAML file and can be interacted through the curl command provided in the main.sh file. For example, curl -sI `http://127.0.0.1:9080/ip`.",
 	"hints": {
 		"isDistructive": false,
 		"isIdempotent": true
