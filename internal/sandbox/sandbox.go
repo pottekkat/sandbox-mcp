@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"context"
 	"fmt"
+	"log"
 	"os"
 	"path/filepath"
 	"strings"
@@ -91,7 +92,11 @@ func NewSandboxToolHandler(sandboxConfig *config.SandboxConfig) func(context.Con
 		if err != nil {
 			return nil, fmt.Errorf("failed to create a temporary directory: %v", err)
 		}
-		defer os.RemoveAll(dir)
+		defer func() {
+			if err := os.RemoveAll(dir); err != nil {
+				log.Printf("Failed to remove temp directory: %v", err)
+			}
+		}()
 
 		// Write the entrypoint to script file in the temp directory
 		cmdFile := filepath.Join(dir, sandboxConfig.Entrypoint)
@@ -140,7 +145,11 @@ func NewSandboxToolHandler(sandboxConfig *config.SandboxConfig) func(context.Con
 		if err != nil {
 			return nil, fmt.Errorf("failed to create Docker client: %v", err)
 		}
-		defer cli.Close()
+		defer func() {
+			if err := cli.Close(); err != nil {
+				log.Printf("Failed to close Docker client: %v", err)
+			}
+		}()
 
 		// Create container config
 		containerConfig := &container.Config{
@@ -284,7 +293,11 @@ func NewSandboxToolHandler(sandboxConfig *config.SandboxConfig) func(context.Con
 			if err != nil {
 				return nil, fmt.Errorf("failed to get logs: %v", err)
 			}
-			defer logs.Close()
+			defer func() {
+				if err := logs.Close(); err != nil {
+					log.Printf("Failed to close logs: %v", err)
+				}
+			}()
 
 			// Read stdout and stderr
 			stdout := new(bytes.Buffer)

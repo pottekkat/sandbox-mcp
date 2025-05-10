@@ -29,7 +29,11 @@ func PullSandboxes(destPath string, force bool) error {
 	if err != nil {
 		return fmt.Errorf("failed to download sandboxes: %v", err)
 	}
-	defer resp.Body.Close()
+	defer func() {
+		if err := resp.Body.Close(); err != nil {
+			log.Printf("Failed to close response body: %v", err)
+		}
+	}()
 
 	if resp.StatusCode != http.StatusOK {
 		return fmt.Errorf("failed to download sandboxes: HTTP %d", resp.StatusCode)
@@ -40,8 +44,16 @@ func PullSandboxes(destPath string, force bool) error {
 	if err != nil {
 		return fmt.Errorf("failed to create temporary file: %v", err)
 	}
-	defer os.Remove(tmpFile.Name())
-	defer tmpFile.Close()
+	defer func() {
+		if err := os.Remove(tmpFile.Name()); err != nil {
+			log.Printf("Failed to remove temp file: %v", err)
+		}
+	}()
+	defer func() {
+		if err := tmpFile.Close(); err != nil {
+			log.Printf("Failed to close temp file: %v", err)
+		}
+	}()
 
 	// Copy the download to the temporary file
 	_, err = io.Copy(tmpFile, resp.Body)
@@ -64,14 +76,22 @@ func extractTarGz(srcPath, destPath string, force bool) error {
 	if err != nil {
 		return err
 	}
-	defer file.Close()
+	defer func() {
+		if err := file.Close(); err != nil {
+			log.Printf("Failed to close file: %v", err)
+		}
+	}()
 
 	// Set up gzip reader
 	gzr, err := gzip.NewReader(file)
 	if err != nil {
 		return err
 	}
-	defer gzr.Close()
+	defer func() {
+		if err := gzr.Close(); err != nil {
+			log.Printf("Failed to close gzip reader: %v", err)
+		}
+	}()
 
 	// Read tar archive
 	tr := tar.NewReader(gzr)
@@ -118,10 +138,12 @@ func extractTarGz(srcPath, destPath string, force bool) error {
 				return err
 			}
 			if _, err := io.Copy(outFile, tr); err != nil {
-				outFile.Close()
+				cerr := outFile.Close()
+				if cerr != nil {
+					log.Printf("Failed to close output file after copy error: %v", cerr)
+				}
 				return err
 			}
-			outFile.Close()
 		}
 	}
 
