@@ -101,8 +101,8 @@ Add this to your `claude_desktop_config.json` for Claude Desktop or `mcp.json` f
 
 ## Available Sandboxes
 
-| Sandbox ID | Description |
-|------------|-------------|
+| Sandbox | Description |
+|---------|-------------|
 | [shell](/sandboxes/shell) | A secure, isolated Linux environment for running lightweight commands that does not require network access. |
 | [python](/sandboxes/python) | Safely execute Python code in a secure, isolated environment. |
 | [rust](/sandboxes/rust) | Compile and run Rust code in an isolated environment. |
