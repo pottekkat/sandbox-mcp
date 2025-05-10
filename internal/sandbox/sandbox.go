@@ -47,7 +47,7 @@ func NewSandboxTool(sandboxConfig *config.SandboxConfig) mcp.Tool {
 	options := []mcp.ToolOption{
 		// All tools have a description and an entrypoint
 		mcp.WithDescription(generateSandboxDescription(sandboxConfig)),
-		withEntrypoint(sandboxConfig.Entrypoint, fmt.Sprintf("Code to be stored in a file named `%s` and executed with the command `%s`.",
+		withEntrypoint(sandboxConfig.ParamEntrypoint(), fmt.Sprintf("Code to be stored in a file named `%s` and executed with the command `%s`.",
 			sandboxConfig.Entrypoint,
 			strings.Join(sandboxConfig.Command, " "))),
 		mcp.WithToolAnnotation(mcp.ToolAnnotation{
@@ -61,7 +61,7 @@ func NewSandboxTool(sandboxConfig *config.SandboxConfig) mcp.Tool {
 
 	// Add any specific additional files if provided in the config
 	for _, file := range sandboxConfig.Parameters.Files {
-		options = append(options, withFile(file.Name, file.Description, true))
+		options = append(options, withFile(file.ParamName(), file.Description, true))
 	}
 
 	// Allow adding more files if enabled
@@ -79,7 +79,9 @@ func NewSandboxToolHandler(sandboxConfig *config.SandboxConfig) func(context.Con
 	return func(ctx context.Context, request mcp.CallToolRequest) (*mcp.CallToolResult, error) {
 		// withEntrypoint ToolOption
 		// Get the contents of the entrypoint file from the request
-		entrypointContent, ok := request.Params.Arguments[sandboxConfig.Entrypoint].(string)
+		entrypointFile := config.SandboxFile{Name: sandboxConfig.Entrypoint}
+		entrypointParam := entrypointFile.ParamName()
+		entrypointContent, ok := request.Params.Arguments[entrypointParam].(string)
 		if !ok || entrypointContent == "" {
 			return nil, fmt.Errorf("%s file is required", sandboxConfig.Entrypoint)
 		}
@@ -100,7 +102,8 @@ func NewSandboxToolHandler(sandboxConfig *config.SandboxConfig) func(context.Con
 		// withFile ToolOption
 		// Get the contents of the required files from the request
 		for _, file := range sandboxConfig.Parameters.Files {
-			content, ok := request.Params.Arguments[file.Name].(string)
+			paramName := file.ParamName()
+			content, ok := request.Params.Arguments[paramName].(string)
 			if !ok || content == "" {
 				return nil, fmt.Errorf("%s file is required", file.Name)
 			}

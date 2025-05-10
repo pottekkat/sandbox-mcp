@@ -6,6 +6,7 @@ import (
 	"os"
 	"path/filepath"
 	"strconv"
+	"strings"
 	"time"
 )
 
@@ -56,13 +57,21 @@ func (h *SandboxHints) IsExternalInteraction(securityNetwork string) bool {
 	return securityNetwork != "none"
 }
 
+// SandboxFile represents a file parameter
+type SandboxFile struct {
+	Name        string `json:"name"`
+	Description string `json:"description"`
+}
+
+// ParamName returns a safe parameter name for a file (replaces '.' with '_')
+func (f *SandboxFile) ParamName() string {
+	return strings.ReplaceAll(f.Name, ".", "_")
+}
+
 // SandboxParameters represents the parameters configuration
 type SandboxParameters struct {
-	AdditionalFiles bool `json:"additionalFiles"`
-	Files           []struct {
-		Name        string `json:"name"`
-		Description string `json:"description"`
-	} `json:"files,omitempty"`
+	AdditionalFiles bool          `json:"additionalFiles"`
+	Files           []SandboxFile `json:"files,omitempty"`
 }
 
 // SandboxSecurity represents the security configuration
@@ -124,6 +133,11 @@ func (c *SandboxConfig) Name() string {
 		return c.NameRaw
 	}
 	return c.Id
+}
+
+// ParamEntrypoint returns the entrypoint file name with proper formatting
+func (c *SandboxConfig) ParamEntrypoint() string {
+	return strings.ReplaceAll(c.Entrypoint, ".", "_")
 }
 
 // Timeout returns the timeout as a time.Duration
