@@ -3,7 +3,7 @@
 	"name": "Python",
 	"description": "Safely execute Python code in a secure, isolated environment.",
 	"hints": {
-		"isDistructive": false,
+		"isDestructive": false,
 		"isIdempotent": true
 	},
 	"version": "0.1.0",

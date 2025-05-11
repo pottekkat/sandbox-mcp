@@ -3,7 +3,7 @@
 	"name": "Network Tools",
 	"description": "Use various network utilities in an isolated Linux sandbox. Perfect for network diagnostics and troubleshooting. See https://github.com/jonlabelle/docker-network-tools for a list of available tools.",
 	"hints": {
-		"isDistructive": true,
+		"isDestructive": true,
 		"isIdempotent": false
 	},
 	"version": "0.1.0",

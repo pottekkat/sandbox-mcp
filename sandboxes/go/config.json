@@ -3,7 +3,7 @@
 	"name": "Golang",
 	"description": "Run Go code securely in an isolated environment with network access.",
 	"hints": {
-		"isDistructive": false,
+		"isDestructive": false,
 		"isIdempotent": true
 	},
 	"version": "0.1.0",

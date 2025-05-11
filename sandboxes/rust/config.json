@@ -3,7 +3,7 @@
 	"name": "Rust",
 	"description": "Compile and run Rust code in an isolated environment.",
 	"hints": {
-		"isDistructive": false,
+		"isDestructive": false,
 		"isIdempotent": true
 	},
 	"version": "0.1.0",

@@ -3,7 +3,7 @@
 	"name": "Apache APISIX",
 	"description": "Run a lightweight instance of Apache APISIX, which can be configured through a YAML file and can be interacted through the curl command provided in the main.sh file. For example, curl -sI `http://127.0.0.1:9080/ip`. Make sure to add #END to the end of the yaml file.",
 	"hints": {
-		"isDistructive": false,
+		"isDestructive": false,
 		"isIdempotent": true
 	},
 	"version": "0.1.0",

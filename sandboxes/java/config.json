@@ -3,7 +3,7 @@
 	"name": "Java",
 	"description": "Compile and run Java code in an isolated sandbox. Supports Java preview features.",
 	"hints": {
-		"isDistructive": false,
+		"isDestructive": false,
 		"isIdempotent": true
 	},
 	"version": "0.1.0",

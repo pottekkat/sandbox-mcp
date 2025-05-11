@@ -3,7 +3,7 @@
 	"name": "JavaScript",
 	"description": "Run JavaScript code in an isolated environment using Node.js.",
 	"hints": {
-		"isDistructive": false,
+		"isDestructive": false,
 		"isIdempotent": true
 	},
 	"version": "0.1.0",
