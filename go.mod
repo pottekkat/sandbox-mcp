@@ -5,7 +5,7 @@ go 1.23.4
 require (
 	github.com/adrg/xdg v0.5.3
 	github.com/docker/docker v28.1.1+incompatible
-	github.com/mark3labs/mcp-go v0.26.0
+	github.com/mark3labs/mcp-go v0.27.0
 	github.com/moby/go-archive v0.1.0
 )
 
@@ -45,4 +45,4 @@ require (
 	golang.org/x/time v0.11.0 // indirect
 )
 
-replace github.com/mark3labs/mcp-go => github.com/pottekkat/mcp-go v0.0.0-20250508170125-abac82df8043
+// replace github.com/mark3labs/mcp-go => ../mcp-go/

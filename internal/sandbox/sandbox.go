@@ -51,13 +51,12 @@ func NewSandboxTool(sandboxConfig *config.SandboxConfig) mcp.Tool {
 		withEntrypoint(sandboxConfig.ParamEntrypoint(), fmt.Sprintf("Code to be stored in a file named `%s` and executed with the command `%s`.",
 			sandboxConfig.Entrypoint,
 			strings.Join(sandboxConfig.Command, " "))),
-		mcp.WithToolAnnotation(mcp.ToolAnnotation{
-			Title:           sandboxConfig.Name(),
-			ReadOnlyHint:    mcp.BoolPtr(sandboxConfig.Hints.IsReadOnly(sandboxConfig.Mount.ReadOnly, sandboxConfig.Security.ReadOnly)),
-			DestructiveHint: mcp.BoolPtr(sandboxConfig.Hints.IsDestructive()),
-			IdempotentHint:  mcp.BoolPtr(sandboxConfig.Hints.IsIdempotent()),
-			OpenWorldHint:   mcp.BoolPtr(sandboxConfig.Hints.IsExternalInteraction(sandboxConfig.Security.Network)),
-		}),
+
+		mcp.WithTitleAnnotation(sandboxConfig.Name()),
+		mcp.WithReadOnlyHintAnnotation(sandboxConfig.Hints.IsReadOnly(sandboxConfig.Mount.ReadOnly, sandboxConfig.Security.ReadOnly)),
+		mcp.WithDestructiveHintAnnotation(sandboxConfig.Hints.IsDestructive()),
+		mcp.WithIdempotentHintAnnotation(sandboxConfig.Hints.IsIdempotent()),
+		mcp.WithOpenWorldHintAnnotation(sandboxConfig.Hints.IsExternalInteraction(sandboxConfig.Security.Network)),
 	}
 
 	// Add any specific additional files if provided in the config
