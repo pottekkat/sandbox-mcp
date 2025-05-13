@@ -10,7 +10,7 @@ import (
 
 	"github.com/docker/docker/api/types"
 	"github.com/docker/docker/client"
-	"github.com/moby/go-archive"
+	"github.com/docker/docker/pkg/archive"
 	"github.com/pottekkat/sandbox-mcp/internal/config"
 )
 
@@ -24,11 +24,7 @@ func BuildImage(ctx context.Context, sandboxConfig *config.SandboxConfig, basePa
 	if err != nil {
 		return fmt.Errorf("failed to create Docker client: %v", err)
 	}
-	defer func() {
-		if err := cli.Close(); err != nil {
-			log.Printf("Failed to close Docker client: %v", err)
-		}
-	}()
+	defer cli.Close()
 
 	// Get the sandbox directory which contains the Dockerfile
 	sandboxDir := filepath.Join(basePath, sandboxConfig.Id)
@@ -48,11 +44,7 @@ func BuildImage(ctx context.Context, sandboxConfig *config.SandboxConfig, basePa
 	if err != nil {
 		return fmt.Errorf("failed to build image: %v", err)
 	}
-	defer func() {
-		if err := resp.Body.Close(); err != nil {
-			log.Printf("Failed to close response body: %v", err)
-		}
-	}()
+	defer resp.Body.Close()
 
 	// Stream build output to stdout
 	_, err = io.Copy(os.Stdout, resp.Body)
