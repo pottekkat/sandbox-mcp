@@ -10,7 +10,7 @@ import (
 
 	"github.com/docker/docker/api/types"
 	"github.com/docker/docker/client"
-	"github.com/docker/docker/pkg/archive"
+	"github.com/moby/go-archive"
 	"github.com/pottekkat/sandbox-mcp/internal/config"
 )
 
