@@ -4,6 +4,8 @@ import (
 	"context"
 	"flag"
 	"log"
+	"slices"
+	"strings"
 
 	"github.com/mark3labs/mcp-go/server"
 	"github.com/pottekkat/sandbox-mcp/internal/appconfig"
@@ -17,6 +19,7 @@ func main() {
 	build := flag.Bool("build", false, "Build Docker images for all sandboxes")
 	pull := flag.Bool("pull", false, "Pull default sandboxes from GitHub")
 	force := flag.Bool("force", false, "Force overwrite existing sandboxes when pulling")
+	disableSandboxes := flag.String("disable-sandboxes", "", "List of disabling sandboxes")
 	flag.Parse()
 
 	// Configure logging
@@ -58,6 +61,11 @@ func main() {
 
 	// Only start MCP server if the stdio flag is present
 	if *stdio {
+		var disableSandboxesList []string
+		if *disableSandboxes != "" {
+			disableSandboxesList = strings.Split(*disableSandboxes, ",")
+		}
+
 		// Create a new MCP server
 		s := server.NewMCPServer(
 			"Sandbox MCP",
@@ -69,6 +77,11 @@ func main() {
 
 		// Create and add tools for each sandbox configuration
 		for _, cfg := range configs {
+			// Skip sandboxes in disable-sandboxes list
+			if slices.Contains(disableSandboxesList, cfg.Id) {
+				continue
+			}
+
 			// Create a new tool from the config
 			tool := sandbox.NewSandboxTool(cfg)
 
