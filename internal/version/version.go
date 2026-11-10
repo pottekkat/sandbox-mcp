@@ -1,8 +1,12 @@
 package version
 
+// UnstampedVersion is the value Version holds when the build did not inject a
+// release tag, which is the case for a plain `go build`.
+const UnstampedVersion = "dev"
+
 var (
 	// These values are injected during build time using -ldflags
-	Version   = "dev"
+	Version   = UnstampedVersion
 	CommitSHA = "none"
 )
 
