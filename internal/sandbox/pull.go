@@ -18,10 +18,21 @@ const (
 	githubReleaseURL = "https://github.com/pottekkat/sandbox-mcp/releases/download/%s/sandboxes.tar.gz"
 )
 
+// releaseAssetURL returns the download URL for the sandboxes archive shipped with
+// the given release tag.
+func releaseAssetURL(tag string) string {
+	return fmt.Sprintf(githubReleaseURL, tag)
+}
+
 // PullSandboxes downloads and extracts sandboxes from GitHub releases
 func PullSandboxes(destPath string, force bool) error {
 	// Build the download URL using the current version
-	url := fmt.Sprintf(githubReleaseURL, version.GetVersion())
+	tag := version.GetVersion()
+	if tag == version.UnstampedVersion || tag == "" {
+		return fmt.Errorf("failed to download sandboxes: this build carries no release version, " +
+			"so the sandboxes archive cannot be located; install a released binary or pass a sandboxes path")
+	}
+	url := releaseAssetURL(tag)
 	log.Printf("Downloading sandboxes from: %s", url)
 
 	// Download the file

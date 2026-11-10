@@ -15,6 +15,15 @@ builds:
     binary: sandbox-mcp
     env:
       - CGO_ENABLED=0
+    # The version is read at runtime to build the release asset URL that --pull
+    # downloads from. Without these flags every released binary keeps the "dev"
+    # default and asks for .../download/dev/sandboxes.tar.gz, which 404s.
+    # .Tag is used rather than .Version because the asset path needs the leading
+    # "v" that .Version strips.
+    ldflags:
+      - -s -w
+      - -X github.com/pottekkat/sandbox-mcp/internal/version.Version={{ .Tag }}
+      - -X github.com/pottekkat/sandbox-mcp/internal/version.CommitSHA={{ .ShortCommit }}
     goos:
       - linux
       - windows
